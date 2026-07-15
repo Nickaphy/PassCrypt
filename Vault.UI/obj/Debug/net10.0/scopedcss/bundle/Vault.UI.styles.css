@@ -1,0 +1,253 @@
+/* /Components/Layout/MainLayout.razor.rz.scp.css */
+.main-content--locked[b-bv88vl7guv] {
+    filter: blur(4px);
+    pointer-events: none;
+    user-select: none;
+}
+
+.main-content--unlocked[b-bv88vl7guv] {
+    filter: none;
+    pointer-events: auto;
+    user-select: auto;
+}
+/* /Components/Layout/ReconnectModal.razor.rz.scp.css */
+.components-reconnect-first-attempt-visible[b-2qz8inx0sr],
+.components-reconnect-repeated-attempt-visible[b-2qz8inx0sr],
+.components-reconnect-failed-visible[b-2qz8inx0sr],
+.components-pause-visible[b-2qz8inx0sr],
+.components-resume-failed-visible[b-2qz8inx0sr],
+.components-rejoining-animation[b-2qz8inx0sr] {
+    display: none;
+}
+
+#components-reconnect-modal.components-reconnect-show .components-reconnect-first-attempt-visible[b-2qz8inx0sr],
+#components-reconnect-modal.components-reconnect-show .components-rejoining-animation[b-2qz8inx0sr],
+#components-reconnect-modal.components-reconnect-paused .components-pause-visible[b-2qz8inx0sr],
+#components-reconnect-modal.components-reconnect-resume-failed .components-resume-failed-visible[b-2qz8inx0sr],
+#components-reconnect-modal.components-reconnect-retrying[b-2qz8inx0sr],
+#components-reconnect-modal.components-reconnect-retrying .components-reconnect-repeated-attempt-visible[b-2qz8inx0sr],
+#components-reconnect-modal.components-reconnect-retrying .components-rejoining-animation[b-2qz8inx0sr],
+#components-reconnect-modal.components-reconnect-failed[b-2qz8inx0sr],
+#components-reconnect-modal.components-reconnect-failed .components-reconnect-failed-visible[b-2qz8inx0sr] {
+    display: block;
+}
+
+
+#components-reconnect-modal[b-2qz8inx0sr] {
+    background-color: white;
+    width: 20rem;
+    margin: 20vh auto;
+    padding: 2rem;
+    border: 0;
+    border-radius: 0.5rem;
+    box-shadow: 0 3px 6px 2px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: display 0.5s allow-discrete, overlay 0.5s allow-discrete;
+    animation: components-reconnect-modal-fadeOutOpacity-b-2qz8inx0sr 0.5s both;
+    &[open]
+
+{
+    animation: components-reconnect-modal-slideUp-b-2qz8inx0sr 1.5s cubic-bezier(.05, .89, .25, 1.02) 0.3s, components-reconnect-modal-fadeInOpacity-b-2qz8inx0sr 0.5s ease-in-out 0.3s;
+    animation-fill-mode: both;
+}
+
+}
+
+#components-reconnect-modal[b-2qz8inx0sr]::backdrop {
+    background-color: rgba(0, 0, 0, 0.4);
+    animation: components-reconnect-modal-fadeInOpacity-b-2qz8inx0sr 0.5s ease-in-out;
+    opacity: 1;
+}
+
+@keyframes components-reconnect-modal-slideUp-b-2qz8inx0sr {
+    0% {
+        transform: translateY(30px) scale(0.95);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes components-reconnect-modal-fadeInOpacity-b-2qz8inx0sr {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes components-reconnect-modal-fadeOutOpacity-b-2qz8inx0sr {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.components-reconnect-container[b-2qz8inx0sr] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+#components-reconnect-modal p[b-2qz8inx0sr] {
+    margin: 0;
+    text-align: center;
+}
+
+#components-reconnect-modal button[b-2qz8inx0sr] {
+    border: 0;
+    background-color: #6b9ed2;
+    color: white;
+    padding: 4px 24px;
+    border-radius: 4px;
+}
+
+    #components-reconnect-modal button:hover[b-2qz8inx0sr] {
+        background-color: #3b6ea2;
+    }
+
+    #components-reconnect-modal button:active[b-2qz8inx0sr] {
+        background-color: #6b9ed2;
+    }
+
+.components-rejoining-animation[b-2qz8inx0sr] {
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+
+    .components-rejoining-animation div[b-2qz8inx0sr] {
+        position: absolute;
+        border: 3px solid #0087ff;
+        opacity: 1;
+        border-radius: 50%;
+        animation: components-rejoining-animation-b-2qz8inx0sr 1.5s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+    }
+
+        .components-rejoining-animation div:nth-child(2)[b-2qz8inx0sr] {
+            animation-delay: -0.5s;
+        }
+
+@keyframes components-rejoining-animation-b-2qz8inx0sr {
+    0% {
+        top: 40px;
+        left: 40px;
+        width: 0;
+        height: 0;
+        opacity: 0;
+    }
+
+    4.9% {
+        top: 40px;
+        left: 40px;
+        width: 0;
+        height: 0;
+        opacity: 0;
+    }
+
+    5% {
+        top: 40px;
+        left: 40px;
+        width: 0;
+        height: 0;
+        opacity: 1;
+    }
+
+    100% {
+        top: 0px;
+        left: 0px;
+        width: 80px;
+        height: 80px;
+        opacity: 0;
+    }
+}
+/* /Components/MasterPasswordModal.razor.rz.scp.css */
+.master-password-overlay[b-bkhzm53xjk] {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(15, 23, 42, 0.72);
+    backdrop-filter: blur(6px);
+}
+
+.master-password-dialog[b-bkhzm53xjk] {
+    width: min(100%, 24rem);
+    margin: 1rem;
+    padding: 2rem;
+    border-radius: 1rem;
+    background: #ffffff;
+    box-shadow: 0 24px 48px rgba(15, 23, 42, 0.24);
+}
+
+.master-password-dialog h1[b-bkhzm53xjk] {
+    margin: 0 0 0.5rem;
+    font-size: 1.75rem;
+    color: #0f172a;
+}
+
+.master-password-subtitle[b-bkhzm53xjk] {
+    margin: 0 0 1.5rem;
+    color: #475569;
+}
+
+.master-password-field[b-bkhzm53xjk] {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.master-password-field label[b-bkhzm53xjk] {
+    font-weight: 600;
+    color: #334155;
+}
+
+.master-password-field input[b-bkhzm53xjk] {
+    padding: 0.75rem 0.875rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+}
+
+.master-password-field input:focus[b-bkhzm53xjk] {
+    outline: 2px solid #2563eb;
+    outline-offset: 1px;
+    border-color: #2563eb;
+}
+
+.master-password-error[b-bkhzm53xjk] {
+    margin: 0 0 1rem;
+    color: #dc2626;
+    font-size: 0.925rem;
+}
+
+.master-password-submit[b-bkhzm53xjk] {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    background: #2563eb;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.master-password-submit:disabled[b-bkhzm53xjk] {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.master-password-submit:not(:disabled):hover[b-bkhzm53xjk] {
+    background: #1d4ed8;
+}

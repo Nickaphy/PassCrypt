@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "VyoTXVtTZr8=",
+  "success": true,
+  "projectFilePath": "/home/nicklasdc/Skrivebord/PassCrypt/Vault.UI/Vault.UI.csproj",
+  "expectedPackageFiles": [
+    "/home/nicklasdc/.nuget/packages/konscious.security.cryptography.argon2/1.3.1/konscious.security.cryptography.argon2.1.3.1.nupkg.sha512",
+    "/home/nicklasdc/.nuget/packages/konscious.security.cryptography.blake2/1.1.1/konscious.security.cryptography.blake2.1.1.1.nupkg.sha512",
+    "/home/nicklasdc/.nuget/packages/microsoft.aspnetcore.app.internal.assets/10.0.0/microsoft.aspnetcore.app.internal.assets.10.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

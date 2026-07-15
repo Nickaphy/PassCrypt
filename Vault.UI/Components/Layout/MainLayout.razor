@@ -1,0 +1,29 @@
+@inherits LayoutComponentBase
+@implements IDisposable
+
+<MasterPasswordModal @rendermode="InteractiveServer" />
+
+<div class="main-content @(AppState.IsUnlocked ? "main-content--unlocked" : "main-content--locked")">
+    @Body
+</div>
+
+<div id="blazor-error-ui" data-nosnippet>
+    An unhandled error has occurred.
+    <a href="." class="reload">Reload</a>
+    <span class="dismiss">🗙</span>
+</div>
+
+@code {
+    [Inject]
+    private VaultAppState AppState { get; set; } = default!;
+
+    protected override void OnInitialized()
+    {
+        AppState.OnChange += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        AppState.OnChange -= StateHasChanged;
+    }
+}

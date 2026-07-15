@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vault.Core", "Vault.Core\Vault.Core.csproj", "{3B98DF03-F919-433A-86C5-2F6D1F64F3F8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vault.Infrastructure", "Vault.Infrastructure\Vault.Infrastructure.csproj", "{6730310C-CDF1-4BD3-BA18-A619A83EC2D7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vault.UI", "Vault.UI\Vault.UI.csproj", "{E4A2B8C1-7D3F-4E91-9A6B-2C8F5D1E3A47}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3B98DF03-F919-433A-86C5-2F6D1F64F3F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B98DF03-F919-433A-86C5-2F6D1F64F3F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B98DF03-F919-433A-86C5-2F6D1F64F3F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B98DF03-F919-433A-86C5-2F6D1F64F3F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6730310C-CDF1-4BD3-BA18-A619A83EC2D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6730310C-CDF1-4BD3-BA18-A619A83EC2D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6730310C-CDF1-4BD3-BA18-A619A83EC2D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6730310C-CDF1-4BD3-BA18-A619A83EC2D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4A2B8C1-7D3F-4E91-9A6B-2C8F5D1E3A47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4A2B8C1-7D3F-4E91-9A6B-2C8F5D1E3A47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4A2B8C1-7D3F-4E91-9A6B-2C8F5D1E3A47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4A2B8C1-7D3F-4E91-9A6B-2C8F5D1E3A47}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

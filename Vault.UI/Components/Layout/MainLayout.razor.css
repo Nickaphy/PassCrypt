@@ -1,0 +1,11 @@
+.main-content--locked {
+    filter: blur(4px);
+    pointer-events: none;
+    user-select: none;
+}
+
+.main-content--unlocked {
+    filter: none;
+    pointer-events: auto;
+    user-select: auto;
+}
