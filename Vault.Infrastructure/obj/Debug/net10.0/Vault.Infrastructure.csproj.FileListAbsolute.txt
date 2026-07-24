@@ -13,3 +13,4 @@
 /home/nicklasdc/Skrivebord/PassCrypt/Vault.Infrastructure/bin/Debug/net10.0/Vault.Core.dll
 /home/nicklasdc/Skrivebord/PassCrypt/Vault.Infrastructure/bin/Debug/net10.0/Vault.Core.pdb
 /home/nicklasdc/Skrivebord/PassCrypt/Vault.Infrastructure/obj/Debug/net10.0/Vault.In.1462FD26.Up2Date
+/home/nicklasdc/Skrivebord/PassCrypt/Vault.Infrastructure/obj/Debug/net10.0/Vault.Infrastructure.sourcelink.json

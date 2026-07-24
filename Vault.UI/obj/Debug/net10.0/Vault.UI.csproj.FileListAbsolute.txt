@@ -34,8 +34,6 @@
 /home/nicklasdc/Skrivebord/PassCrypt/Vault.UI/obj/Debug/net10.0/compressed/wdmy230j1n-{0}-w97mql0d9w-w97mql0d9w.gz
 /home/nicklasdc/Skrivebord/PassCrypt/Vault.UI/obj/Debug/net10.0/compressed/mzol08iti6-{0}-j8lzlu28q6-j8lzlu28q6.gz
 /home/nicklasdc/Skrivebord/PassCrypt/Vault.UI/obj/Debug/net10.0/compressed/itu3734zm5-{0}-u1n4jc5v46-u1n4jc5v46.gz
-/home/nicklasdc/Skrivebord/PassCrypt/Vault.UI/obj/Debug/net10.0/compressed/mczv23cq90-{0}-qfuk3gyamw-qfuk3gyamw.gz
-/home/nicklasdc/Skrivebord/PassCrypt/Vault.UI/obj/Debug/net10.0/compressed/4wew3ala2o-{0}-qfuk3gyamw-qfuk3gyamw.gz
 /home/nicklasdc/Skrivebord/PassCrypt/Vault.UI/obj/Debug/net10.0/staticwebassets.build.json
 /home/nicklasdc/Skrivebord/PassCrypt/Vault.UI/obj/Debug/net10.0/staticwebassets.build.json.cache
 /home/nicklasdc/Skrivebord/PassCrypt/Vault.UI/obj/Debug/net10.0/staticwebassets.development.json
@@ -47,3 +45,6 @@
 /home/nicklasdc/Skrivebord/PassCrypt/Vault.UI/bin/Debug/net10.0/Konscious.Security.Cryptography.Blake2.dll
 /home/nicklasdc/Skrivebord/PassCrypt/Vault.UI/bin/Debug/net10.0/Vault.Infrastructure.dll
 /home/nicklasdc/Skrivebord/PassCrypt/Vault.UI/bin/Debug/net10.0/Vault.Infrastructure.pdb
+/home/nicklasdc/Skrivebord/PassCrypt/Vault.UI/obj/Debug/net10.0/Vault.UI.sourcelink.json
+/home/nicklasdc/Skrivebord/PassCrypt/Vault.UI/obj/Debug/net10.0/compressed/mczv23cq90-{0}-iip3ffe9zr-iip3ffe9zr.gz
+/home/nicklasdc/Skrivebord/PassCrypt/Vault.UI/obj/Debug/net10.0/compressed/4wew3ala2o-{0}-iip3ffe9zr-iip3ffe9zr.gz
