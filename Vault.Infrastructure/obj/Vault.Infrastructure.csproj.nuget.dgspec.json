@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/nicklasdc/Skrivebord/PassCrypt/Vault.Infrastructure/Vault.Infrastructure.csproj": {}
+    "/home/nicklasdc/Desktop/PassCrypt/Vault.Infrastructure/Vault.Infrastructure.csproj": {}
   },
   "projects": {
-    "/home/nicklasdc/Skrivebord/PassCrypt/Vault.Core/Vault.Core.csproj": {
+    "/home/nicklasdc/Desktop/PassCrypt/Vault.Core/Vault.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/nicklasdc/Skrivebord/PassCrypt/Vault.Core/Vault.Core.csproj",
+        "projectUniqueName": "/home/nicklasdc/Desktop/PassCrypt/Vault.Core/Vault.Core.csproj",
         "projectName": "Vault.Core",
-        "projectPath": "/home/nicklasdc/Skrivebord/PassCrypt/Vault.Core/Vault.Core.csproj",
+        "projectPath": "/home/nicklasdc/Desktop/PassCrypt/Vault.Core/Vault.Core.csproj",
         "packagesPath": "/home/nicklasdc/.nuget/packages/",
-        "outputPath": "/home/nicklasdc/Skrivebord/PassCrypt/Vault.Core/obj/",
+        "outputPath": "/home/nicklasdc/Desktop/PassCrypt/Vault.Core/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/nicklasdc/.nuget/NuGet/NuGet.Config"
@@ -60,7 +60,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/10.0.100/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/10.0.110/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -338,14 +338,14 @@
         }
       }
     },
-    "/home/nicklasdc/Skrivebord/PassCrypt/Vault.Infrastructure/Vault.Infrastructure.csproj": {
+    "/home/nicklasdc/Desktop/PassCrypt/Vault.Infrastructure/Vault.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/nicklasdc/Skrivebord/PassCrypt/Vault.Infrastructure/Vault.Infrastructure.csproj",
+        "projectUniqueName": "/home/nicklasdc/Desktop/PassCrypt/Vault.Infrastructure/Vault.Infrastructure.csproj",
         "projectName": "Vault.Infrastructure",
-        "projectPath": "/home/nicklasdc/Skrivebord/PassCrypt/Vault.Infrastructure/Vault.Infrastructure.csproj",
+        "projectPath": "/home/nicklasdc/Desktop/PassCrypt/Vault.Infrastructure/Vault.Infrastructure.csproj",
         "packagesPath": "/home/nicklasdc/.nuget/packages/",
-        "outputPath": "/home/nicklasdc/Skrivebord/PassCrypt/Vault.Infrastructure/obj/",
+        "outputPath": "/home/nicklasdc/Desktop/PassCrypt/Vault.Infrastructure/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/nicklasdc/.nuget/NuGet/NuGet.Config"
@@ -361,8 +361,8 @@
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "/home/nicklasdc/Skrivebord/PassCrypt/Vault.Core/Vault.Core.csproj": {
-                "projectPath": "/home/nicklasdc/Skrivebord/PassCrypt/Vault.Core/Vault.Core.csproj"
+              "/home/nicklasdc/Desktop/PassCrypt/Vault.Core/Vault.Core.csproj": {
+                "projectPath": "/home/nicklasdc/Desktop/PassCrypt/Vault.Core/Vault.Core.csproj"
               }
             }
           }
@@ -404,7 +404,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/10.0.100/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/10.0.110/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",

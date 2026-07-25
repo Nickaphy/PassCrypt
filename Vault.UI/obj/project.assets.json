@@ -31,7 +31,7 @@
           }
         }
       },
-      "Microsoft.AspNetCore.App.Internal.Assets/10.0.0": {
+      "Microsoft.AspNetCore.App.Internal.Assets/10.0.10": {
         "type": "package",
         "build": {
           "build/Microsoft.AspNetCore.App.Internal.Assets.props": {},
@@ -106,10 +106,10 @@
         "lib/netstandard1.3/Konscious.Security.Cryptography.Blake2.xml"
       ]
     },
-    "Microsoft.AspNetCore.App.Internal.Assets/10.0.0": {
-      "sha512": "0gZrESKwnlmbE8Br8XIy3kk7Pj0++9T2Ly+A8BFYYgo5EgfqWEln26cho+l92KOaHUzclhvz314RiwE910s24g==",
+    "Microsoft.AspNetCore.App.Internal.Assets/10.0.10": {
+      "sha512": "8k0KoYKvNrSqP8E3oDJMBVKavlTEE6BacdLGtEDcxv9Hz0XxWFkD6JdLJsxXUlGeAfZ6YfvWmxKenl73qeCTSA==",
       "type": "package",
-      "path": "microsoft.aspnetcore.app.internal.assets/10.0.0",
+      "path": "microsoft.aspnetcore.app.internal.assets/10.0.10",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -125,7 +125,7 @@
         "build/Microsoft.AspNetCore.App.Internal.Assets.targets",
         "buildMultiTargeting/Microsoft.AspNetCore.App.Internal.Assets.targets",
         "buildTransitive/Microsoft.AspNetCore.App.Internal.Assets.targets",
-        "microsoft.aspnetcore.app.internal.assets.10.0.0.nupkg.sha512",
+        "microsoft.aspnetcore.app.internal.assets.10.0.10.nupkg.sha512",
         "microsoft.aspnetcore.app.internal.assets.nuspec"
       ]
     },
@@ -142,7 +142,7 @@
   },
   "projectFileDependencyGroups": {
     "net10.0": [
-      "Microsoft.AspNetCore.App.Internal.Assets >= 10.0.0",
+      "Microsoft.AspNetCore.App.Internal.Assets >= 10.0.10",
       "Vault.Core >= 1.0.0",
       "Vault.Infrastructure >= 1.0.0"
     ]
@@ -153,11 +153,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/nicklasdc/Skrivebord/PassCrypt/Vault.UI/Vault.UI.csproj",
+      "projectUniqueName": "/home/nicklasdc/Desktop/PassCrypt/Vault.UI/Vault.UI.csproj",
       "projectName": "Vault.UI",
-      "projectPath": "/home/nicklasdc/Skrivebord/PassCrypt/Vault.UI/Vault.UI.csproj",
+      "projectPath": "/home/nicklasdc/Desktop/PassCrypt/Vault.UI/Vault.UI.csproj",
       "packagesPath": "/home/nicklasdc/.nuget/packages/",
-      "outputPath": "/home/nicklasdc/Skrivebord/PassCrypt/Vault.UI/obj/",
+      "outputPath": "/home/nicklasdc/Desktop/PassCrypt/Vault.UI/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/nicklasdc/.nuget/NuGet/NuGet.Config"
@@ -173,11 +173,11 @@
         "net10.0": {
           "targetAlias": "net10.0",
           "projectReferences": {
-            "/home/nicklasdc/Skrivebord/PassCrypt/Vault.Core/Vault.Core.csproj": {
-              "projectPath": "/home/nicklasdc/Skrivebord/PassCrypt/Vault.Core/Vault.Core.csproj"
+            "/home/nicklasdc/Desktop/PassCrypt/Vault.Core/Vault.Core.csproj": {
+              "projectPath": "/home/nicklasdc/Desktop/PassCrypt/Vault.Core/Vault.Core.csproj"
             },
-            "/home/nicklasdc/Skrivebord/PassCrypt/Vault.Infrastructure/Vault.Infrastructure.csproj": {
-              "projectPath": "/home/nicklasdc/Skrivebord/PassCrypt/Vault.Infrastructure/Vault.Infrastructure.csproj"
+            "/home/nicklasdc/Desktop/PassCrypt/Vault.Infrastructure/Vault.Infrastructure.csproj": {
+              "projectPath": "/home/nicklasdc/Desktop/PassCrypt/Vault.Infrastructure/Vault.Infrastructure.csproj"
             }
           }
         }
@@ -201,7 +201,7 @@
           "Microsoft.AspNetCore.App.Internal.Assets": {
             "suppressParent": "All",
             "target": "Package",
-            "version": "[10.0.0, )",
+            "version": "[10.0.10, )",
             "autoReferenced": true
           }
         },
@@ -224,7 +224,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/10.0.100/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/10.0.110/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.AspNetCore": "(,10.0.32767]",
           "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",

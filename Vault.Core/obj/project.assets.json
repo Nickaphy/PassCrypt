@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/nicklasdc/Skrivebord/PassCrypt/Vault.Core/Vault.Core.csproj",
+      "projectUniqueName": "/home/nicklasdc/Desktop/PassCrypt/Vault.Core/Vault.Core.csproj",
       "projectName": "Vault.Core",
-      "projectPath": "/home/nicklasdc/Skrivebord/PassCrypt/Vault.Core/Vault.Core.csproj",
+      "projectPath": "/home/nicklasdc/Desktop/PassCrypt/Vault.Core/Vault.Core.csproj",
       "packagesPath": "/home/nicklasdc/.nuget/packages/",
-      "outputPath": "/home/nicklasdc/Skrivebord/PassCrypt/Vault.Core/obj/",
+      "outputPath": "/home/nicklasdc/Desktop/PassCrypt/Vault.Core/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/nicklasdc/.nuget/NuGet/NuGet.Config"
@@ -66,7 +66,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/10.0.100/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/10.0.110/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.CSharp": "(,4.7.32767]",
           "Microsoft.VisualBasic": "(,10.4.32767]",

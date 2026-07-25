@@ -10,3 +10,15 @@
 /home/nicklasdc/Skrivebord/PassCrypt/Vault.Core/obj/Debug/net10.0/Vault.Core.pdb
 /home/nicklasdc/Skrivebord/PassCrypt/Vault.Core/obj/Debug/net10.0/ref/Vault.Core.dll
 /home/nicklasdc/Skrivebord/PassCrypt/Vault.Core/obj/Debug/net10.0/Vault.Core.sourcelink.json
+/home/nicklasdc/Desktop/PassCrypt/Vault.Core/bin/Debug/net10.0/Vault.Core.deps.json
+/home/nicklasdc/Desktop/PassCrypt/Vault.Core/bin/Debug/net10.0/Vault.Core.dll
+/home/nicklasdc/Desktop/PassCrypt/Vault.Core/bin/Debug/net10.0/Vault.Core.pdb
+/home/nicklasdc/Desktop/PassCrypt/Vault.Core/obj/Debug/net10.0/Vault.Core.GeneratedMSBuildEditorConfig.editorconfig
+/home/nicklasdc/Desktop/PassCrypt/Vault.Core/obj/Debug/net10.0/Vault.Core.AssemblyInfoInputs.cache
+/home/nicklasdc/Desktop/PassCrypt/Vault.Core/obj/Debug/net10.0/Vault.Core.AssemblyInfo.cs
+/home/nicklasdc/Desktop/PassCrypt/Vault.Core/obj/Debug/net10.0/Vault.Core.csproj.CoreCompileInputs.cache
+/home/nicklasdc/Desktop/PassCrypt/Vault.Core/obj/Debug/net10.0/Vault.Core.sourcelink.json
+/home/nicklasdc/Desktop/PassCrypt/Vault.Core/obj/Debug/net10.0/Vault.Core.dll
+/home/nicklasdc/Desktop/PassCrypt/Vault.Core/obj/Debug/net10.0/refint/Vault.Core.dll
+/home/nicklasdc/Desktop/PassCrypt/Vault.Core/obj/Debug/net10.0/Vault.Core.pdb
+/home/nicklasdc/Desktop/PassCrypt/Vault.Core/obj/Debug/net10.0/ref/Vault.Core.dll

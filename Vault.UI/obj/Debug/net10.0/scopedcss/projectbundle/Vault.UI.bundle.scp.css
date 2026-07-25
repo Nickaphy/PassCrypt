@@ -257,3 +257,47 @@
 .master-password-submit:not(:disabled):hover[b-bkhzm53xjk] {
     background: #1d4ed8;
 }
+/* /Components/Pages/Dashboard.razor.rz.scp.css */
+/* Site main container for dashboard*/
+.dashboard-container[b-mpife5o3mg] 
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    background: linear-gradient(to bottom right, sandybrown, saddlebrown);
+}
+
+/* PassCrypt title styling */
+.dashboard-container .dashboard-title[b-mpife5o3mg]
+{
+    color: #3E2723;
+    font-size: 75px;
+    text-align: center;
+    margin: 20px 0;
+    padding: 20px;
+}
+
+/* Button styling */
+.btn[b-mpife5o3mg] {
+    background-color: #3E2723;
+    color: grey;
+    padding: 15px 40px;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    margin: 10px;
+    width: 200px;                
+    height: 50px;                
+    transition: all 0.3s ease;
+}
+.btn:hover[b-mpife5o3mg] {
+    background-color: #613E37;
+    color: white;
+}
+.btn.active[b-mpife5o3mg] {
+    background-color: #613E37;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

@@ -7,7 +7,7 @@ using Vault.UI.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents();
+    .AddInteractiveServerComponents(options => options.DetailedErrors = true);
 
 // Dependency injection for the services.
 // Load create salt.
