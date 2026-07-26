@@ -3,15 +3,172 @@
 <PageTitle>Dashboard</PageTitle>
 
 <div class="dashboard-container">
-    <h1 class="dashboard-title">PassCrypt</h1>
-    
-    <button class="btn">Add Entry </button> 
-    <button class="btn">View Entries </button>
-    
+    <section class="dashboard-card">
+        <p class="dashboard-kicker">Vault Overview</p>
+        <h1 class="dashboard-title">PassCrypt</h1>
+
+        <div class="dashboard-metrics">
+            <article class="metric-card">
+                <span class="metric-value">@EntryCount</span>
+                <span class="metric-label">Saved Entries</span>
+            </article>
+            <article class="metric-card">
+                <span class="metric-value">@StrongPasswordCount</span>
+                <span class="metric-label">Strong Passwords</span>
+            </article>
+            <article class="metric-card">
+                <span class="metric-value">@DistinctCategories</span>
+                <span class="metric-label">Categories</span>
+            </article>
+        </div>
+
+        <div class="dashboard-actions">
+            <button class="btn" @onclick="OpenAddEntry">Add Entry</button>
+            <button class="btn" @onclick="OpenViewEntry">View Entries</button>
+        </div>
+    </section>
 </div>
 
 
-@code
+@if (showViewEntryModal)
 {
-    
+    <div class="modal-overlay" @onclick="CloseViewEntry">
+        <section class="modal-panel modal-panel-wide" aria-labelledby="view-entries-title" aria-modal="true" role="dialog" @onclick:stopPropagation="true">
+            <button class="modal-close" @onclick="CloseViewEntry">×</button>
+            <header class="modal-header">
+                <h2 id="view-entries-title" class="modal-title">View Entries</h2>
+                <p class="modal-subtitle">Browse saved accounts and inspect details quickly.</p>
+            </header>
+
+            <div class="view-toolbar">
+                <input class="field-input search-input" type="search" placeholder="Search by app, username, or tag..." />
+                <button class="panel-btn" type="button">Newest</button>
+                <button class="panel-btn" type="button">A-Z</button>
+            </div>
+
+            <div class="entries-layout">
+                <aside class="entries-list">
+                    <div class="empty-state">
+                        No saved entries yet.
+                    </div>
+                </aside>
+
+                <section class="entry-details">
+                    <div class="empty-state">
+                        Select an entry to view its details.
+                    </div>
+                </section>
+            </div>
+
+            <footer class="modal-footer">
+                <button class="panel-btn panel-btn-secondary" type="button">Copy Username</button>
+                <button class="panel-btn panel-btn-secondary" type="button">Copy Password</button>
+                <button class="panel-btn panel-btn-primary" type="button">Edit Entry</button>
+            </footer>
+        </section>
+    </div>
+
+}
+
+
+@if (showAddEntryModal)
+{
+    <div class="modal-overlay" @onclick="CloseAddEntry">
+        <section class="modal-panel modal-panel-wide" aria-labelledby="add-entry-title" aria-modal="true" role="dialog" @onclick:stopPropagation="true">
+            <button class="modal-close" @onclick="CloseAddEntry">×</button>
+            <header class="modal-header">
+                <h2 id="add-entry-title" class="modal-title">Add Entry</h2>
+                <p class="modal-subtitle">Store a new login with clear structure and tags.</p>
+            </header>
+
+            <div class="add-entry-layout">
+                <form class="add-entry-form" @onsubmit:preventDefault>
+                    <div class="form-grid">
+                        <label class="form-field">
+                            <span>Entry name</span>
+                            <input class="field-input" type="text" placeholder="e.g. GitHub" />
+                        </label>
+
+                        <label class="form-field">
+                            <span>Category</span>
+                            <select class="field-input">
+                                <option>Work</option>
+                                <option>Personal</option>
+                                <option>Finance</option>
+                                <option>Shopping</option>
+                            </select>
+                        </label>
+
+                        <label class="form-field">
+                            <span>Website / app URL</span>
+                            <input class="field-input" type="url" placeholder="https://..." />
+                        </label>
+
+                        <label class="form-field">
+                            <span>Username / email</span>
+                            <input class="field-input" type="text" placeholder="name@example.com" />
+                        </label>
+
+                        <label class="form-field">
+                            <span>Password</span>
+                            <div class="password-row">
+                                <input class="field-input" type="password" placeholder="••••••••••••" />
+                                <button class="panel-btn panel-btn-secondary" type="button">Generate</button>
+                            </div>
+                        </label>
+
+                        <label class="form-field">
+                            <span>Tags</span>
+                            <input class="field-input" type="text" placeholder="team, primary, 2fa" />
+                        </label>
+                    </div>
+
+                    <label class="form-field form-field-full">
+                        <span>Notes</span>
+                        <textarea class="field-input notes-input" rows="5" placeholder="Recovery hints, backup codes, or extra context..."></textarea>
+                    </label>
+                </form>
+
+                <aside class="add-entry-side">
+                    <h3>Quick Checklist</h3>
+                    <p>Use unique passwords per account and save recovery details in Notes.</p>
+                    <div class="tip-chips">
+                        <span class="tip-chip">12+ chars</span>
+                        <span class="tip-chip">Upper + lower</span>
+                        <span class="tip-chip">Numbers + symbols</span>
+                        <span class="tip-chip">Enable 2FA</span>
+                    </div>
+                </aside>
+            </div>
+
+            <footer class="modal-footer">
+                <button class="panel-btn panel-btn-secondary" type="button" @onclick="CloseAddEntry">Cancel</button>
+                <button class="panel-btn panel-btn-primary" type="submit">Save Entry</button>
+            </footer>
+        </section>
+    </div>
+}
+
+@code {
+    private bool showAddEntryModal;
+    private bool showViewEntryModal;
+    private int EntryCount => 0;
+    private int StrongPasswordCount => 0;
+    private int DistinctCategories => 0;
+
+    private void OpenAddEntry()
+    {
+        showViewEntryModal = false;
+        showAddEntryModal = true;
+    }
+
+    private void CloseAddEntry() => showAddEntryModal = false;
+
+    private void OpenViewEntry()
+    {
+        showAddEntryModal = false;
+        showViewEntryModal = true;
+    }
+
+    private void CloseViewEntry() => showViewEntryModal = false;
 }

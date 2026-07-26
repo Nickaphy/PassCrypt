@@ -97,5 +97,5 @@
 /home/nicklasdc/Desktop/PassCrypt/Vault.UI/obj/Debug/net10.0/ref/Vault.UI.dll
 /home/nicklasdc/Desktop/PassCrypt/Vault.UI/obj/Debug/net10.0/scopedcss/Components/Pages/Dashboard.razor.rz.scp.css
 /home/nicklasdc/Desktop/PassCrypt/Vault.UI/obj/Debug/net10.0/scopedcss/Components/MasterPasswordModal.razor.rz.scp.css
-/home/nicklasdc/Desktop/PassCrypt/Vault.UI/obj/Debug/net10.0/compressed/mczv23cq90-{0}-5ehvhqjv5y-5ehvhqjv5y.gz
-/home/nicklasdc/Desktop/PassCrypt/Vault.UI/obj/Debug/net10.0/compressed/4wew3ala2o-{0}-5ehvhqjv5y-5ehvhqjv5y.gz
+/home/nicklasdc/Desktop/PassCrypt/Vault.UI/obj/Debug/net10.0/compressed/mczv23cq90-{0}-7lb5ltufu1-7lb5ltufu1.gz
+/home/nicklasdc/Desktop/PassCrypt/Vault.UI/obj/Debug/net10.0/compressed/4wew3ala2o-{0}-7lb5ltufu1-7lb5ltufu1.gz
