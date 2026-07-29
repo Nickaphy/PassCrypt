@@ -1,0 +1,16 @@
+/home/nicklasdc/Desktop/PassCrypt/Vault.Application/bin/Debug/net10.0/Vault.Application.deps.json
+/home/nicklasdc/Desktop/PassCrypt/Vault.Application/bin/Debug/net10.0/Vault.Application.dll
+/home/nicklasdc/Desktop/PassCrypt/Vault.Application/bin/Debug/net10.0/Vault.Application.pdb
+/home/nicklasdc/Desktop/PassCrypt/Vault.Application/bin/Debug/net10.0/Vault.Core.dll
+/home/nicklasdc/Desktop/PassCrypt/Vault.Application/bin/Debug/net10.0/Vault.Core.pdb
+/home/nicklasdc/Desktop/PassCrypt/Vault.Application/obj/Debug/net10.0/Vault.Application.csproj.AssemblyReference.cache
+/home/nicklasdc/Desktop/PassCrypt/Vault.Application/obj/Debug/net10.0/Vault.Application.GeneratedMSBuildEditorConfig.editorconfig
+/home/nicklasdc/Desktop/PassCrypt/Vault.Application/obj/Debug/net10.0/Vault.Application.AssemblyInfoInputs.cache
+/home/nicklasdc/Desktop/PassCrypt/Vault.Application/obj/Debug/net10.0/Vault.Application.AssemblyInfo.cs
+/home/nicklasdc/Desktop/PassCrypt/Vault.Application/obj/Debug/net10.0/Vault.Application.csproj.CoreCompileInputs.cache
+/home/nicklasdc/Desktop/PassCrypt/Vault.Application/obj/Debug/net10.0/Vault.Application.sourcelink.json
+/home/nicklasdc/Desktop/PassCrypt/Vault.Application/obj/Debug/net10.0/Vault.Ap.33196B72.Up2Date
+/home/nicklasdc/Desktop/PassCrypt/Vault.Application/obj/Debug/net10.0/Vault.Application.dll
+/home/nicklasdc/Desktop/PassCrypt/Vault.Application/obj/Debug/net10.0/refint/Vault.Application.dll
+/home/nicklasdc/Desktop/PassCrypt/Vault.Application/obj/Debug/net10.0/Vault.Application.pdb
+/home/nicklasdc/Desktop/PassCrypt/Vault.Application/obj/Debug/net10.0/ref/Vault.Application.dll

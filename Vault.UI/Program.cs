@@ -1,4 +1,8 @@
+using Vault.Application.Interface;
+using Vault.Application.Services;
 using Vault.Core.Abstractions;
+using Vault.Facade.Interface;
+using Vault.Facade.Services;
 using Vault.Infrastructure;
 using Vault.Infrastructure.Services;
 using Vault.UI.Components;
@@ -24,6 +28,10 @@ builder.Services.AddScoped<VaultAppState>();
 builder.Services.AddScoped<IVaultSessionService, VaultSessionService>();
 // Vault file store.
 builder.Services.AddScoped<IVaultFileStore, VaultFileStore>();
+// Entry application service.
+builder.Services.AddScoped<IEntryApplicationService, EntryApplicationService>();
+// Facade.
+builder.Services.AddScoped<IVaultFacade, VaultFacade>();
 
 var app = builder.Build();
 
