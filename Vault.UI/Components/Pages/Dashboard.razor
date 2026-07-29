@@ -2,6 +2,7 @@
 @using Vault.Core
 @using Vault.Facade.Interface
 @inject IVaultFacade VaultFacade
+@inject VaultAppState AppState
 
 <PageTitle>Dashboard</PageTitle>
 
@@ -170,6 +171,7 @@
     </div>
 }
 
+
 @code {
     private bool showAddEntryModal;
     private bool showViewEntryModal;
@@ -192,12 +194,38 @@
         .Distinct(StringComparer.OrdinalIgnoreCase)
         .Count();
 
+    
+    // Runs once Dashboard is created, subscribes the dashboard to AppState.OnChange
+    // so that way gets notified when the vault unlocks
+    protected override void OnInitialized()
+    {
+        AppState.OnChange += HandleVaultStateChanged;
+    }
+
+    private async Task LoadEntriesAsync()
+    {
+        _entries.Clear();
+        _entries.AddRange(await VaultFacade.GetEntriesAsync());
+    }
+
+    // Runs when AppState.SetUnlocked() fires. It reloads entries from VaultFacade.GetEntriesAsync() and redraws UI.
+    private async void HandleVaultStateChanged()
+    {
+        await LoadEntriesAsync();
+        await InvokeAsync(StateHasChanged);
+    }
+
+    // Unsubcribes when the component is destroyed
+    public void Dispose()
+    {
+        AppState.OnChange -= HandleVaultStateChanged;
+    }
+
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            _entries.Clear();
-            _entries.AddRange(await VaultFacade.GetEntriesAsync());
+            await LoadEntriesAsync();
         }
         catch (UnauthorizedAccessException)
         {
@@ -213,14 +241,19 @@
 
     private void CloseAddEntry() => showAddEntryModal = false;
 
-    private void OpenViewEntry()
+    private async Task OpenViewEntry()
     {
         showAddEntryModal = false;
         showViewEntryModal = true;
+
+        // Reload entries every time the view opens so unlocked data is shown immediately.
+        await LoadEntriesAsync();
     }
 
     private void CloseViewEntry() => showViewEntryModal = false;
 
+    
+    // Start of the Entry flow - Calls AddEntryAsync in facade interface to save the entry and then refreshes the list of entries
     private async Task HandleSaveEntryAsync()
     {
         _saveError = null;
@@ -236,8 +269,7 @@
                 _notes,
                 _tags);
 
-            _entries.Clear();
-            _entries.AddRange(await VaultFacade.GetEntriesAsync());
+            await LoadEntriesAsync();
 
             ResetForm();
             CloseAddEntry();
@@ -256,6 +288,7 @@
         }
     }
 
+    // Resets the forms
     private void ResetForm()
     {
         _entryName = string.Empty;

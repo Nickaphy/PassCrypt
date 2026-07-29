@@ -1,6 +1,7 @@
 using Vault.Application.Commands;
 using Vault.Application.Interface;
 using Vault.Core;
+using Vault.Core.Abstractions;
 using Vault.Facade.Interface;
 
 namespace Vault.Facade.Services;
@@ -8,12 +9,15 @@ namespace Vault.Facade.Services;
 public class VaultFacade : IVaultFacade
 {
     private readonly IEntryApplicationService _entryApplicationService;
+    private readonly IVaultEntryQueryService _vaultEntryQueryService;
 
-    public VaultFacade(IEntryApplicationService entryApplicationService)
+    public VaultFacade(IVaultEntryQueryService vaultEntryQueryService, IEntryApplicationService entryApplicationService)
     {
+        _vaultEntryQueryService = vaultEntryQueryService;
         _entryApplicationService = entryApplicationService;
     }
 
+    //Interface Implementation
     public Task AddEntryAsync(
         string entryName,
         string category,
@@ -40,6 +44,6 @@ public class VaultFacade : IVaultFacade
 
     public Task<IReadOnlyList<VaultEntry>> GetEntriesAsync(CancellationToken cancellationToken = default)
     {
-        return _entryApplicationService.GetEntriesAsync(cancellationToken);
+        return _vaultEntryQueryService.GetEntriesAsync(cancellationToken);
     }
 }

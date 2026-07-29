@@ -30,3 +30,7 @@
 /home/nicklasdc/Desktop/PassCrypt/Vault.Infrastructure/obj/Debug/net10.0/refint/Vault.Infrastructure.dll
 /home/nicklasdc/Desktop/PassCrypt/Vault.Infrastructure/obj/Debug/net10.0/Vault.Infrastructure.pdb
 /home/nicklasdc/Desktop/PassCrypt/Vault.Infrastructure/obj/Debug/net10.0/ref/Vault.Infrastructure.dll
+/home/nicklasdc/Desktop/PassCrypt/Vault.Infrastructure/bin/Debug/net10.0/Vault.Application.dll
+/home/nicklasdc/Desktop/PassCrypt/Vault.Infrastructure/bin/Debug/net10.0/Vault.Facade.dll
+/home/nicklasdc/Desktop/PassCrypt/Vault.Infrastructure/bin/Debug/net10.0/Vault.Facade.pdb
+/home/nicklasdc/Desktop/PassCrypt/Vault.Infrastructure/bin/Debug/net10.0/Vault.Application.pdb

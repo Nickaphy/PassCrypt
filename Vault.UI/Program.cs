@@ -33,6 +33,8 @@ builder.Services.AddScoped<IEntryApplicationService, EntryApplicationService>();
 // Facade.
 builder.Services.AddScoped<IVaultFacade, VaultFacade>();
 
+builder.Services.AddScoped<IVaultEntryQueryService, VaultEntryQueryService>();
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())

@@ -12,6 +12,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Vault.Core\Vault.Core.csproj" />
+        <ProjectReference Include="..\Vault.Facade\Vault.Facade.csproj" />
     </ItemGroup>
 
 </Project>

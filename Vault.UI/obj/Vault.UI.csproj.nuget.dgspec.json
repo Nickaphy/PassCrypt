@@ -1042,6 +1042,9 @@
             "projectReferences": {
               "/home/nicklasdc/Desktop/PassCrypt/Vault.Core/Vault.Core.csproj": {
                 "projectPath": "/home/nicklasdc/Desktop/PassCrypt/Vault.Core/Vault.Core.csproj"
+              },
+              "/home/nicklasdc/Desktop/PassCrypt/Vault.Facade/Vault.Facade.csproj": {
+                "projectPath": "/home/nicklasdc/Desktop/PassCrypt/Vault.Facade/Vault.Facade.csproj"
               }
             }
           }

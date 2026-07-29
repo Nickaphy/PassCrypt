@@ -5,7 +5,7 @@ namespace Vault.Infrastructure.Services;
 
 public class LoadCreateSalt
 {
-    //Method responsible for loading or creating the salt.    
+    // Loads the salt from disk or creates a new one.
     public byte[] LoadOrCreateSalt()
     {
         string saltPath = GetSaltPath();
@@ -31,7 +31,6 @@ public class LoadCreateSalt
         return Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             "PassCrypt",
-                "salt.bin");
-        
+            "salt.bin");
     }
 }
