@@ -1,4 +1,7 @@
 @page "/dashboard"
+@using Vault.Core
+@using Vault.Facade.Interface
+@inject IVaultFacade VaultFacade
 
 <PageTitle>Dashboard</PageTitle>
 
@@ -48,9 +51,22 @@
 
             <div class="entries-layout">
                 <aside class="entries-list">
-                    <div class="empty-state">
-                        No saved entries yet.
-                    </div>
+                    @if (_entries.Count == 0)
+                    {
+                        <div class="empty-state">
+                            No saved entries yet.
+                        </div>
+                    }
+                    else
+                    {
+                        @foreach (var entry in _entries)
+                        {
+                            <article class="entry-item">
+                                <strong>@entry.EntryName</strong>
+                                <div>@entry.Username</div>
+                            </article>
+                        }
+                    }
                 </aside>
 
                 <section class="entry-details">
@@ -82,16 +98,16 @@
             </header>
 
             <div class="add-entry-layout">
-                <form class="add-entry-form" @onsubmit:preventDefault>
+                <form id="add-entry-form" class="add-entry-form" @onsubmit="HandleSaveEntryAsync" @onsubmit:preventDefault>
                     <div class="form-grid">
                         <label class="form-field">
                             <span>Entry name</span>
-                            <input class="field-input" type="text" placeholder="e.g. GitHub" />
+                            <input class="field-input" type="text" placeholder="e.g. GitHub" @bind="_entryName" />
                         </label>
 
                         <label class="form-field">
                             <span>Category</span>
-                            <select class="field-input">
+                            <select class="field-input" @bind="_category">
                                 <option>Work</option>
                                 <option>Personal</option>
                                 <option>Finance</option>
@@ -101,32 +117,37 @@
 
                         <label class="form-field">
                             <span>Website / app URL</span>
-                            <input class="field-input" type="url" placeholder="https://..." />
+                            <input class="field-input" type="url" placeholder="https://..." @bind="_url" />
                         </label>
 
                         <label class="form-field">
                             <span>Username / email</span>
-                            <input class="field-input" type="text" placeholder="name@example.com" />
+                            <input class="field-input" type="text" placeholder="name@example.com" @bind="_username" />
                         </label>
 
                         <label class="form-field">
                             <span>Password</span>
                             <div class="password-row">
-                                <input class="field-input" type="password" placeholder="••••••••••••" />
+                                <input class="field-input" type="password" placeholder="••••••••••••" @bind="_password" />
                                 <button class="panel-btn panel-btn-secondary" type="button">Generate</button>
                             </div>
                         </label>
 
                         <label class="form-field">
                             <span>Tags</span>
-                            <input class="field-input" type="text" placeholder="team, primary, 2fa" />
+                            <input class="field-input" type="text" placeholder="team, primary, 2fa" @bind="_tags" />
                         </label>
                     </div>
 
                     <label class="form-field form-field-full">
                         <span>Notes</span>
-                        <textarea class="field-input notes-input" rows="5" placeholder="Recovery hints, backup codes, or extra context..."></textarea>
+                        <textarea class="field-input notes-input" rows="5" placeholder="Recovery hints, backup codes, or extra context..." @bind="_notes"></textarea>
                     </label>
+
+                    @if (!string.IsNullOrWhiteSpace(_saveError))
+                    {
+                        <p class="master-password-error" role="alert">@_saveError</p>
+                    }
                 </form>
 
                 <aside class="add-entry-side">
@@ -143,7 +164,7 @@
 
             <footer class="modal-footer">
                 <button class="panel-btn panel-btn-secondary" type="button" @onclick="CloseAddEntry">Cancel</button>
-                <button class="panel-btn panel-btn-primary" type="submit">Save Entry</button>
+                <button class="panel-btn panel-btn-primary" type="submit" form="add-entry-form">Save Entry</button>
             </footer>
         </section>
     </div>
@@ -152,9 +173,37 @@
 @code {
     private bool showAddEntryModal;
     private bool showViewEntryModal;
-    private int EntryCount => 0;
-    private int StrongPasswordCount => 0;
-    private int DistinctCategories => 0;
+    private readonly List<VaultEntry> _entries = new();
+
+    private string _entryName = string.Empty;
+    private string _category = "Work";
+    private string _url = string.Empty;
+    private string _username = string.Empty;
+    private string _password = string.Empty;
+    private string _tags = string.Empty;
+    private string _notes = string.Empty;
+    private string? _saveError;
+
+    private int EntryCount => _entries.Count;
+    private int StrongPasswordCount => _entries.Count(entry => IsStrongPassword(entry.Password));
+    private int DistinctCategories => _entries
+        .Select(entry => entry.Category)
+        .Where(category => !string.IsNullOrWhiteSpace(category))
+        .Distinct(StringComparer.OrdinalIgnoreCase)
+        .Count();
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _entries.Clear();
+            _entries.AddRange(await VaultFacade.GetEntriesAsync());
+        }
+        catch (UnauthorizedAccessException)
+        {
+            _saveError = "Unlock the vault before managing entries.";
+        }
+    }
 
     private void OpenAddEntry()
     {
@@ -171,4 +220,64 @@
     }
 
     private void CloseViewEntry() => showViewEntryModal = false;
+
+    private async Task HandleSaveEntryAsync()
+    {
+        _saveError = null;
+
+        try
+        {
+            await VaultFacade.AddEntryAsync(
+                _entryName,
+                _category,
+                _url,
+                _username,
+                _password,
+                _notes,
+                _tags);
+
+            _entries.Clear();
+            _entries.AddRange(await VaultFacade.GetEntriesAsync());
+
+            ResetForm();
+            CloseAddEntry();
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            _saveError = ex.Message;
+        }
+        catch (ArgumentException ex)
+        {
+            _saveError = ex.Message;
+        }
+        catch (InvalidOperationException ex)
+        {
+            _saveError = ex.Message;
+        }
+    }
+
+    private void ResetForm()
+    {
+        _entryName = string.Empty;
+        _category = "Work";
+        _url = string.Empty;
+        _username = string.Empty;
+        _password = string.Empty;
+        _tags = string.Empty;
+        _notes = string.Empty;
+    }
+
+    private static bool IsStrongPassword(string password)
+    {
+        if (string.IsNullOrEmpty(password) || password.Length < 12)
+        {
+            return false;
+        }
+
+        bool hasUpper = password.Any(char.IsUpper);
+        bool hasLower = password.Any(char.IsLower);
+        bool hasDigit = password.Any(char.IsDigit);
+        bool hasSymbol = password.Any(ch => !char.IsLetterOrDigit(ch));
+        return hasUpper && hasLower && hasDigit && hasSymbol;
+    }
 }

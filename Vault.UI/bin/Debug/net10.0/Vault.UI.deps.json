@@ -9,6 +9,7 @@
       "Vault.UI/1.0.0": {
         "dependencies": {
           "Vault.Core": "1.0.0",
+          "Vault.Facade": "1.0.0",
           "Vault.Infrastructure": "1.0.0"
         },
         "runtime": {
@@ -34,9 +35,32 @@
           }
         }
       },
+      "Vault.Application/1.0.0": {
+        "dependencies": {
+          "Vault.Core": "1.0.0"
+        },
+        "runtime": {
+          "Vault.Application.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
       "Vault.Core/1.0.0": {
         "runtime": {
           "Vault.Core.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "Vault.Facade/1.0.0": {
+        "dependencies": {
+          "Vault.Application": "1.0.0",
+          "Vault.Core": "1.0.0"
+        },
+        "runtime": {
+          "Vault.Facade.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
@@ -76,7 +100,17 @@
       "path": "konscious.security.cryptography.blake2/1.1.1",
       "hashPath": "konscious.security.cryptography.blake2.1.1.1.nupkg.sha512"
     },
+    "Vault.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
     "Vault.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Vault.Facade/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
