@@ -2,7 +2,7 @@
 
 namespace Vault.Infrastructure;
 
-// Turns readable text into ciphertext via the derived key.
+// Encrypts plain bytes with AES-GCM.
 public class Encryptor
 {
     public byte[] Encrypt(byte[] key, byte[] plainText, out byte[] nonce, out byte[] tag)

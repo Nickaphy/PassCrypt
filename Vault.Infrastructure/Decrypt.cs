@@ -2,7 +2,7 @@
 
 namespace Vault.Infrastructure;
 
-// Reverses encryption and turns ciphertext back into readable text.
+// Decrypts AES-GCM bytes back into plain bytes.
 public class Decryptor
 {
     public byte[] Decrypt(byte[] key, byte[] nonce, byte[] tag, byte[] cipherText)

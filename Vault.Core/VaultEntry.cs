@@ -1,14 +1,31 @@
+using System.Text.Json.Serialization;
+
 namespace Vault.Core;
 
 public class VaultEntry
 {
+    [JsonInclude]
     public Guid Id { get; private set; } = Guid.NewGuid();
+
+    [JsonInclude]
     public string Category { get; private set; } = string.Empty;
+
+    [JsonInclude]
     public string EntryName { get; private set; } = string.Empty;
+
+    [JsonInclude]
     public string Url { get; private set; } = string.Empty;
+
+    [JsonInclude]
     public string Username { get; private set; } = string.Empty;
+
+    [JsonInclude]
     public string Password { get; private set; } = string.Empty;
+
+    [JsonInclude]
     public string Notes { get; private set; } = string.Empty;
+
+    [JsonInclude]
     public List<string> Tags { get; private set; } = new();
 
     public VaultEntry()

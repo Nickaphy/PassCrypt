@@ -1,3 +1,5 @@
+using Vault.Facade.Services;
+
 namespace Vault.UI.Services;
 
 public class VaultAppState

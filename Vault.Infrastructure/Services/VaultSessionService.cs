@@ -97,7 +97,7 @@ public class VaultSessionService : IVaultSessionService
             throw new UnauthorizedAccessException("Vault is locked.");
         }
 
-        // Convert the list to JSON and encrypt it
+        // Convert the list to JSON string and then to bytes
         string json = JsonSerializer.Serialize(_entries);
         byte[] plainText = System.Text.Encoding.UTF8.GetBytes(json);
 
@@ -110,3 +110,4 @@ public class VaultSessionService : IVaultSessionService
         _vaultFileStore.Save(nonce, tag, cipherText);
     }
 }
+
