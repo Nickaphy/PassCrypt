@@ -36,6 +36,26 @@ public class EntryApplicationService : IEntryApplicationService
         return Task.CompletedTask;
     }
 
+    public Task UpdateEntryAsync(UpdateEntryCommand command, CancellationToken cancellationToken = default)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        string[] parsedTags = command.Tags
+            .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+        _vaultSessionService.UpdateEntry(
+            command.EntryId,
+            command.EntryName,
+            command.Category,
+            command.Url,
+            command.Username,
+            command.Password,
+            command.Notes,
+            parsedTags);
+
+        return Task.CompletedTask;
+    }
+
     public Task<IReadOnlyList<VaultEntry>> GetEntriesAsync(CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();

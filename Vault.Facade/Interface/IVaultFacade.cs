@@ -14,5 +14,16 @@ public interface IVaultFacade
         string tags,
         CancellationToken cancellationToken = default);
 
+    Task UpdateEntryAsync(
+        Guid entryId,
+        string entryName,
+        string category,
+        string url,
+        string username,
+        string password,
+        string notes,
+        string tags,
+        CancellationToken cancellationToken = default);
+
     Task<IReadOnlyList<VaultEntry>> GetEntriesAsync(CancellationToken cancellationToken = default);
 }
