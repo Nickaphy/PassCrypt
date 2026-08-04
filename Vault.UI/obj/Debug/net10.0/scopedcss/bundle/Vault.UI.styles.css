@@ -489,6 +489,30 @@
     flex-direction: column;
     gap: 0.25rem;
 }
+/*Highlight upon entry select */
+.entry-item[b-mpife5o3mg]{
+    border: 1px solid rgba(244, 164, 96, 0.3);
+    border-radius: 10px;
+    background: rgba(40, 22, 14, 0.65);
+    color: #ffe8d4;
+    text-align: left;
+    padding: 0.75rem;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.entry-item:hover[b-mpife5o3mg]{
+    border-color: rgba(255, 230, 206, 0.45);
+    background: rgba(65, 34, 18, 0.75);
+}
+
+.entry-item.is-selected[b-mpife5o3mg] {
+    border-color: rgba(255, 220, 190, 0.6);
+    background: rgba(88, 50, 30, 0.82);
+}
 
 .entry-card:hover[b-mpife5o3mg] {
     border-color: rgba(255, 230, 206, 0.45);

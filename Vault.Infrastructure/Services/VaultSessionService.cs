@@ -71,6 +71,26 @@ public class VaultSessionService : IVaultSessionService
         _entries.Add(entry);
         SaveVault();
     }
+    
+    public void UpdateEntry(
+        Guid entryId,
+        string entryName,
+        string category,
+        string url,
+        string username,
+        string password,
+        string notes,
+        IEnumerable<string> tags)
+    {
+        if (_sessionKey == null) throw new UnauthorizedAccessException("Vault is locked.");
+
+        VaultEntry? entry = _entries.FirstOrDefault(e => e.Id == entryId);
+        if (entry is null)
+            throw new InvalidOperationException($"Entry with ID '{entryId}' was not found.");
+
+        entry.UpdateDetails(entryName, category, url, username, password, notes, tags);
+        SaveVault();
+    }
 
     // Returns a copy of the in-memory list of entries
     public IReadOnlyList<VaultEntry> GetEntries()

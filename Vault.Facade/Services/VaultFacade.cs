@@ -42,6 +42,31 @@ public class VaultFacade : IVaultFacade
         return _entryApplicationService.AddEntryAsync(command, cancellationToken);
     }
 
+    public Task UpdateEntryAsync(
+        Guid entryId,
+        string entryName,
+        string category,
+        string url,
+        string username,
+        string password,
+        string notes,
+        string tags,
+        CancellationToken cancellationToken = default)
+    {
+        var command = new UpdateEntryCommand(
+            entryId,
+            entryName,
+            category,
+            url,
+            username,
+            password,
+            notes,
+            tags);
+           
+        return _entryApplicationService.UpdateEntryAsync(command, cancellationToken);
+    }
+    
+
     public Task<IReadOnlyList<VaultEntry>> GetEntriesAsync(CancellationToken cancellationToken = default)
     {
         return _vaultEntryQueryService.GetEntriesAsync(cancellationToken);
