@@ -74,6 +74,3 @@ PassCrypt/
 
 ## Security disclaimer
 This is a personal project and **has not been independently audited**. The cryptographic choices (Argon2id + AES-256-GCM) follow current best practice, but implementation bugs are always possible. Don't use this as your sole password manager for high-value credentials until it's had real scrutiny — treat it as a learning/portfolio project.
-
-## License
-No license file is currently included. Until one is added, all rights are reserved by default — consider adding an [MIT](https://choosealicense.com/licenses/mit/) or similar license if you want others to use or contribute to this.
