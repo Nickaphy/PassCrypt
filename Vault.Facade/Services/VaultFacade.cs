@@ -71,4 +71,9 @@ public class VaultFacade : IVaultFacade
     {
         return _vaultEntryQueryService.GetEntriesAsync(cancellationToken);
     }
+
+    public Task DeleteEntryAsync(Guid entryId, CancellationToken cancellationToken = default)
+    {
+        return _entryApplicationService.DeleteEntryAsync(entryId, cancellationToken);
+    }
 }

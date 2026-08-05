@@ -26,4 +26,6 @@ public interface IVaultFacade
         CancellationToken cancellationToken = default);
 
     Task<IReadOnlyList<VaultEntry>> GetEntriesAsync(CancellationToken cancellationToken = default);
+    
+    Task DeleteEntryAsync(Guid entryId, CancellationToken cancellationToken = default);
 }
