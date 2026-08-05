@@ -1,28 +1,10 @@
-# Argon2ID
-Argon2ID is password hashing algorithm, it turns a password into a fixed size key, in a way that is slow and expensive to bruteforce.
-- There are 3 different forms.
-    - Argon2d (good against GPU attacks)
-    - Argon2i (side channel attacks)
-    - Argon2id (Both hybrid)
-This is used in out KeyDerivation.cs.
-Argon uses salt which is random bytes from salt.bin which is created for the user upon first password hash, it ensures the same password doesnt produce the same key for different users.
-- Itterations / Memory / parrallelism = (more = slower for attacker and for you)
-**Summary:**
-Argon2id is industry standard for deriving a cryptographic key from a password safely.
-Same password + same salt = same key everytime.
+🟢 Minor
+  - VaultEntry.cs: constructor and UpdateDetails duplicate the same validation/normalization block almost verbatim — not SRP, but worth a private
+  Normalize(...) helper to kill the duplication.
+  - MasterPasswordModal.razor: injects IVaultFileStore directly just to check Exists() for first-run detection — a UI component reaching past the Facade
+  into Infrastructure. Small leak, easy fix (expose IsFirstRun via the facade or session service instead).
 
+  My actual take: don't do a big-bang refactor. Fix Dashboard.razor first — it's 80% of the pain and the only thing that's genuinely hard to reason about
+  right now. VaultSessionService is worth splitting before you add more features that persist data, but it isn't urgent. Everything else is polish.
 
-# AESS-256-GCM
-Framework 'System.Security.Cryptography'
-**AES** advanced encryption standard (symmetric encryption)
-**256** Key size (32 bytes from Argon2id)
-**GCM** Galois/countermode (encrypts and authenticates data)
-
-- Plain AES only hides data. GCM also detects tampering.
-    When you decrypt, GCM checks the tag. If someone changed the file or the password is wrong (wrong key), decryption fails with CryptographicException.
-    That's how your app knows "wrong password" without storing the password anywhere.
-
-## Vault.bin
-**nonce** Random 12 byte value per encryption (same plaintext must not encrypt to the same ciphertext twice)
-**tag** Authentication proof (detects wrong key or tampered data)
-**cipherText** The encrypted bytes
+  Want me to start with the Dashboard.razor split?

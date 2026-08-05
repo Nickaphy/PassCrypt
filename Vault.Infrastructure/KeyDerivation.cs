@@ -1,9 +1,10 @@
 using Konscious.Security.Cryptography;
+using Vault.Core.Abstractions;
 
 namespace Vault.Infrastructure;
 
 // Derives the AES key from the master password.
-public class KeyDerivation
+public class KeyDerivation : IKeyDerivation
 {
     // Use Argon2id to derive the key.
     public byte[] DeriveKey(byte[] password, byte[] salt)

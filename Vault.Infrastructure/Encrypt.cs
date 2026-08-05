@@ -1,9 +1,10 @@
 ﻿using System.Security.Cryptography;
+using Vault.Core.Abstractions;
 
 namespace Vault.Infrastructure;
 
 // Encrypts plain bytes with AES-GCM.
-public class Encryptor
+public class Encryptor : IEncryptor
 {
     public byte[] Encrypt(byte[] key, byte[] plainText, out byte[] nonce, out byte[] tag)
     {

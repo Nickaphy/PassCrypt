@@ -1,9 +1,10 @@
 ﻿using System.Security.Cryptography;
+using Vault.Core.Abstractions;
 
 namespace Vault.Infrastructure;
 
 // Decrypts AES-GCM bytes back into plain bytes.
-public class Decryptor
+public class Decryptor : IDecryptor
 {
     public byte[] Decrypt(byte[] key, byte[] nonce, byte[] tag, byte[] cipherText)
     {

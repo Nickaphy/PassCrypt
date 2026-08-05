@@ -15,16 +15,22 @@ builder.Services.AddRazorComponents()
 
 // Dependency injection for the services.
 // Load create salt.
-builder.Services.AddSingleton<LoadCreateSalt>();
+builder.Services.AddSingleton<ILoadCreateSalt, LoadCreateSalt>();
 // Key derivation.
-builder.Services.AddSingleton<KeyDerivation>();
+builder.Services.AddSingleton<IKeyDerivation, KeyDerivation>();
 // Decryptor.
-builder.Services.AddScoped<Decryptor>();
+builder.Services.AddScoped<IDecryptor, Decryptor>();
 // Encryptor.
-builder.Services.AddScoped<Encryptor>();
+builder.Services.AddScoped<IEncryptor, Encryptor>();
 // Dependency injection for the vault app state.
 builder.Services.AddScoped<VaultAppState>();
-// Vault session service.
+// Vault key session (derives + holds the session's encryption key).
+builder.Services.AddScoped<IVaultKeySession, VaultKeySession>();
+// Vault entry repository (in-memory entry list).
+builder.Services.AddScoped<IVaultEntryRepository, VaultEntryRepository>();
+// Vault persistence service (encrypt/decrypt + read/write the vault file).
+builder.Services.AddScoped<IVaultPersistenceService, VaultPersistenceService>();
+// Vault session service (coordinates the three services above).
 builder.Services.AddScoped<IVaultSessionService, VaultSessionService>();
 // Vault file store.
 builder.Services.AddScoped<IVaultFileStore, VaultFileStore>();

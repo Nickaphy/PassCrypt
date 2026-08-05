@@ -1,0 +1,24 @@
+<div class="modal-overlay" @onclick="OnClose">
+    <section class="modal-panel modal-panel-wide" aria-labelledby="@TitleId" aria-modal="true" role="dialog" @onclick:stopPropagation="true">
+        <button class="modal-close" @onclick="OnClose">×</button>
+        <header class="modal-header">
+            <h2 id="@TitleId" class="modal-title">@Title</h2>
+            <p class="modal-subtitle">@Subtitle</p>
+        </header>
+
+        @Body
+
+        <footer class="modal-footer">
+            @Footer
+        </footer>
+    </section>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public string TitleId { get; set; } = string.Empty;
+    [Parameter, EditorRequired] public string Title { get; set; } = string.Empty;
+    [Parameter] public string? Subtitle { get; set; }
+    [Parameter, EditorRequired] public EventCallback OnClose { get; set; }
+    [Parameter, EditorRequired] public RenderFragment Body { get; set; } = default!;
+    [Parameter] public RenderFragment? Footer { get; set; }
+}
