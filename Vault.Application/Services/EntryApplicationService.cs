@@ -56,6 +56,13 @@ public class EntryApplicationService : IEntryApplicationService
         return Task.CompletedTask;
     }
 
+    public Task DeleteEntryAsync(Guid entryId, CancellationToken cancellationToken = default)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+        _vaultSessionService.DeleteEntry(entryId);
+        return Task.CompletedTask;
+    }
+
     public Task<IReadOnlyList<VaultEntry>> GetEntriesAsync(CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();

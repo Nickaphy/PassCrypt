@@ -130,17 +130,26 @@
             </div>
 
             <footer class="modal-footer">
-                <button class="panel-btn panel-btn-secondary" type="button">Copy Username</button>
-                <button class="panel-btn panel-btn-secondary" type="button">Copy Password</button>
+                <div class="modal-footer-group">
+                    @if (_selectedEntry is not null && _isEditingEntry)
+                    {
+                        <button class="panel-btn panel-btn-danger" type="button" @onclick="DeleteSelectedEntryAsync">Delete</button>
+                    }
+                </div>
 
-                @if (_selectedEntry is not null && !_isEditingEntry)
-                {
-                    <button class="panel-btn panel-btn-primary" type="button" @onclick="StartEditingSelectedEntry">Edit Entry</button>
-                }
-                else if (_selectedEntry is not null && _isEditingEntry)
-                {
-                    <button class="panel-btn panel-btn-primary" type="button" @onclick="UpdateSelectedEntryAsync">Update</button>
-                }
+                <div class="modal-footer-group">
+                    <button class="panel-btn panel-btn-secondary" type="button">Copy Username</button>
+                    <button class="panel-btn panel-btn-secondary" type="button">Copy Password</button>
+
+                    @if (_selectedEntry is not null && !_isEditingEntry)
+                    {
+                        <button class="panel-btn panel-btn-primary" type="button" @onclick="StartEditingSelectedEntry">Edit Entry</button>
+                    }
+                    else if (_selectedEntry is not null && _isEditingEntry)
+                    {
+                        <button class="panel-btn panel-btn-primary" type="button" @onclick="UpdateSelectedEntryAsync">Update</button>
+                    }
+                </div>
             </footer>
         </section>
     </div>
@@ -279,6 +288,20 @@
         _editTags = string.Join(", ", _selectedEntry.Tags);
         _editNotes = _selectedEntry.Notes;
         _isEditingEntry = true;
+    }
+
+    private async Task DeleteSelectedEntryAsync()
+    {
+        if (_selectedEntry is null)
+        {
+            _saveError = "Select an entry first.";
+            return;
+        }
+        
+        await VaultFacade.DeleteEntryAsync(_selectedEntry.Id);
+        await LoadEntriesAsync();
+        _selectedEntry = null;
+        _isEditingEntry = false;
     }
 
     private async Task UpdateSelectedEntryAsync()

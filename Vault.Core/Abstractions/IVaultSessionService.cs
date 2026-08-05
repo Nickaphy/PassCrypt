@@ -5,6 +5,9 @@ public interface IVaultSessionService
     Task UnlockWithPasswordAsync(byte[] masterPassword, CancellationToken cancellationToken = default);
     void AddEntry(VaultEntry entry);
     IReadOnlyList<VaultEntry> GetEntries();
+
+
+    void DeleteEntry(Guid entryId);
     
     void UpdateEntry(
         Guid entryId,

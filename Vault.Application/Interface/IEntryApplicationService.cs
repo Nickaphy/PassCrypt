@@ -8,6 +8,8 @@ public interface IEntryApplicationService
     Task AddEntryAsync(CreateEntryCommand command, CancellationToken cancellationToken = default);
     
     Task UpdateEntryAsync(UpdateEntryCommand command, CancellationToken cancellationToken = default);
+    
+    Task DeleteEntryAsync(Guid entryId, CancellationToken cancellationToken = default);
 }
 
 
