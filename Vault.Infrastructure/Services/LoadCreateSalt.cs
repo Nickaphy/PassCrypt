@@ -1,9 +1,10 @@
 using System.Security.Cryptography;
 using System.IO;
+using Vault.Core.Abstractions;
 
 namespace Vault.Infrastructure.Services;
 
-public class LoadCreateSalt
+public class LoadCreateSalt : ILoadCreateSalt
 {
     // Loads the salt from disk or creates a new one.
     public byte[] LoadOrCreateSalt()

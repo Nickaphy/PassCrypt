@@ -1,0 +1,27 @@
+@using Vault.Core
+
+<aside class="entries-list">
+    @if (Entries.Count == 0)
+    {
+        <div class="empty-state">No saved entries yet.</div>
+    }
+    else
+    {
+        @foreach (var entry in Entries)
+        {
+            <article class="entry-item @(ReferenceEquals(SelectedEntry, entry) ? "is-selected" : "")"
+                     role="button"
+                     tabindex="0"
+                     @onclick="() => OnSelect.InvokeAsync(entry)">
+                <strong>@entry.EntryName</strong>
+                <div>@entry.Username</div>
+            </article>
+        }
+    }
+</aside>
+
+@code {
+    [Parameter, EditorRequired] public IReadOnlyList<VaultEntry> Entries { get; set; } = Array.Empty<VaultEntry>();
+    [Parameter] public VaultEntry? SelectedEntry { get; set; }
+    [Parameter, EditorRequired] public EventCallback<VaultEntry> OnSelect { get; set; }
+}

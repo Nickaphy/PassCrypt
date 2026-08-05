@@ -1,0 +1,152 @@
+@using Vault.Core
+@using Vault.Facade.Interface
+@using Vault.UI.Models
+@inject IVaultFacade VaultFacade
+
+<ModalShell TitleId="view-entries-title"
+            Title="View Entries"
+            Subtitle="Browse saved accounts and inspect details quickly."
+            OnClose="OnClose">
+    <Body>
+        <div class="view-toolbar">
+            <input class="field-input search-input" type="search" placeholder="Search by app, username, or tag..." />
+            <button class="panel-btn" type="button">Newest</button>
+            <button class="panel-btn" type="button">A-Å</button>
+        </div>
+
+        <div class="entries-layout">
+            <EntryList Entries="_entries" SelectedEntry="_selectedEntry" OnSelect="SelectEntry" />
+
+            @if (_selectedEntry is null)
+            {
+                <div class="empty-state">Select an entry to view its details.</div>
+            }
+            else if (_isEditingEntry)
+            {
+                <EntryEditForm Draft="_draft" />
+            }
+            else
+            {
+                <section class="entry-details">
+                    <h3>@_selectedEntry.EntryName</h3>
+                    <p><strong>Username:</strong> @_selectedEntry.Username</p>
+                    <p><strong>URL:</strong> @_selectedEntry.Url</p>
+                    <p><strong>Category:</strong> @_selectedEntry.Category</p>
+                    <p><strong>Notes:</strong> @_selectedEntry.Notes</p>
+                    <p><strong>Tags:</strong> @string.Join(", ", _selectedEntry.Tags)</p>
+                </section>
+            }
+        </div>
+
+        @if (!string.IsNullOrWhiteSpace(_actionError))
+        {
+            <p class="form-error" role="alert">@_actionError</p>
+        }
+    </Body>
+    <Footer>
+        <div class="modal-footer-group">
+            @if (_selectedEntry is not null && _isEditingEntry)
+            {
+                <button class="panel-btn panel-btn-danger" type="button" @onclick="DeleteSelectedEntryAsync">Delete</button>
+            }
+        </div>
+
+        <div class="modal-footer-group">
+            <button class="panel-btn panel-btn-secondary" type="button">Copy Username</button>
+            <button class="panel-btn panel-btn-secondary" type="button">Copy Password</button>
+
+            @if (_selectedEntry is not null && !_isEditingEntry)
+            {
+                <button class="panel-btn panel-btn-primary" type="button" @onclick="StartEditingSelectedEntry">Edit Entry</button>
+            }
+            else if (_selectedEntry is not null && _isEditingEntry)
+            {
+                <button class="panel-btn panel-btn-primary" type="button" @onclick="UpdateSelectedEntryAsync">Update</button>
+            }
+        </div>
+    </Footer>
+</ModalShell>
+
+@code {
+    [Parameter, EditorRequired] public EventCallback OnClose { get; set; }
+    [Parameter, EditorRequired] public EventCallback OnEntriesChanged { get; set; }
+
+    private List<VaultEntry> _entries = new();
+    private VaultEntry? _selectedEntry;
+    private bool _isEditingEntry;
+    private EntryEditDraft _draft = new();
+    private string? _actionError;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadEntriesAsync();
+    }
+
+    private async Task LoadEntriesAsync()
+    {
+        _entries = (await VaultFacade.GetEntriesAsync()).ToList();
+    }
+
+    // Switching the selected entry always drops out of edit mode, so a half-edited
+    // draft for one entry can never be submitted against a different entry.
+    private void SelectEntry(VaultEntry entry)
+    {
+        _selectedEntry = entry;
+        _isEditingEntry = false;
+    }
+
+    private void StartEditingSelectedEntry()
+    {
+        if (_selectedEntry is null) return;
+
+        _draft = new EntryEditDraft
+        {
+            EntryName = _selectedEntry.EntryName,
+            Category = _selectedEntry.Category,
+            Url = _selectedEntry.Url,
+            Username = _selectedEntry.Username,
+            Password = _selectedEntry.Password,
+            Tags = string.Join(", ", _selectedEntry.Tags),
+            Notes = _selectedEntry.Notes
+        };
+        _isEditingEntry = true;
+    }
+
+    private async Task DeleteSelectedEntryAsync()
+    {
+        if (_selectedEntry is null)
+        {
+            _actionError = "Select an entry first.";
+            return;
+        }
+
+        await VaultFacade.DeleteEntryAsync(_selectedEntry.Id);
+        await LoadEntriesAsync();
+        _selectedEntry = null;
+        _isEditingEntry = false;
+        await OnEntriesChanged.InvokeAsync();
+    }
+
+    private async Task UpdateSelectedEntryAsync()
+    {
+        if (_selectedEntry is null)
+        {
+            _actionError = "Select an entry first.";
+            return;
+        }
+
+        await VaultFacade.UpdateEntryAsync(
+            _selectedEntry.Id,
+            _draft.EntryName,
+            _draft.Category,
+            _draft.Url,
+            _draft.Username,
+            _draft.Password,
+            _draft.Notes,
+            _draft.Tags);
+
+        await LoadEntriesAsync();
+        _isEditingEntry = false;
+        await OnEntriesChanged.InvokeAsync();
+    }
+}

@@ -1,0 +1,42 @@
+@using Vault.UI.Models
+
+<section class="entry-details">
+    <label class="form-field">
+        <span>Entry name</span>
+        <input class="field-input" type="text" @bind="Draft.EntryName" />
+    </label>
+
+    <label class="form-field">
+        <span>Category</span>
+        <input class="field-input" type="text" @bind="Draft.Category" />
+    </label>
+
+    <label class="form-field">
+        <span>URL</span>
+        <input class="field-input" type="url" @bind="Draft.Url" />
+    </label>
+
+    <label class="form-field">
+        <span>Username</span>
+        <input class="field-input" type="text" @bind="Draft.Username" />
+    </label>
+
+    <label class="form-field">
+        <span>Password</span>
+        <input class="field-input" type="text" @bind="Draft.Password" />
+    </label>
+
+    <label class="form-field">
+        <span>Tags (comma separated)</span>
+        <input class="field-input" type="text" @bind="Draft.Tags" />
+    </label>
+
+    <label class="form-field form-field-full">
+        <span>Notes</span>
+        <textarea class="field-input notes-input" rows="5" @bind="Draft.Notes"></textarea>
+    </label>
+</section>
+
+@code {
+    [Parameter, EditorRequired] public EntryEditDraft Draft { get; set; } = default!;
+}
