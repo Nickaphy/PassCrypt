@@ -47,22 +47,24 @@
             <div class="view-toolbar">
                 <input class="field-input search-input" type="search" placeholder="Search by app, username, or tag..." />
                 <button class="panel-btn" type="button">Newest</button>
-                <button class="panel-btn" type="button">A-Z</button>
+                <button class="panel-btn" type="button">A-Å</button>
             </div>
 
+            @* Entries panel *@ 
             <div class="entries-layout">
                 <aside class="entries-list">
                     @if (_entries.Count == 0)
                     {
-                        <div class="empty-state">
-                            No saved entries yet.
-                        </div>
+                        <div class="empty-state">No saved entries yet.</div>
                     }
                     else
                     {
                         @foreach (var entry in _entries)
                         {
-                            <article class="entry-item">
+                            <article class="entry-item @(ReferenceEquals(_selectedEntry, entry) ? "is-selected" : "")"
+                                     role="button"
+                                     tabindex="0"
+                                     @onclick="() => SelectEntry(entry)">
                                 <strong>@entry.EntryName</strong>
                                 <div>@entry.Username</div>
                             </article>
@@ -70,17 +72,84 @@
                     }
                 </aside>
 
-                <section class="entry-details">
-                    <div class="empty-state">
-                        Select an entry to view its details.
-                    </div>
-                </section>
+                @if (_selectedEntry is null)
+                {
+                    <div class="empty-state">Select an entry to view its details.</div>
+                }
+                else if (_isEditingEntry)
+                {
+                    /* Converts text fields to writeable fields upon _isEditingEntry */
+                    <section class="entry-details">
+                        <label class="form-field">
+                            <span>Entry name</span>
+                            <input class="field-input" type="text" @bind="_editEntryName" />
+                        </label>
+
+                        <label class="form-field">
+                            <span>Category</span>
+                            <input class="field-input" type="text" @bind="_editCategory" />
+                        </label>
+
+                        <label class="form-field">
+                            <span>URL</span>
+                            <input class="field-input" type="url" @bind="_editUrl" />
+                        </label>
+
+                        <label class="form-field">
+                            <span>Username</span>
+                            <input class="field-input" type="text" @bind="_editUsername" />
+                        </label>
+
+                        <label class="form-field">
+                            <span>Password</span>
+                            <input class="field-input" type="text" @bind="_editPassword" />
+                        </label>
+
+                        <label class="form-field">
+                            <span>Tags (comma separated)</span>
+                            <input class="field-input" type="text" @bind="_editTags" />
+                        </label>
+
+                        <label class="form-field form-field-full">
+                            <span>Notes</span>
+                            <textarea class="field-input notes-input" rows="5" @bind="_editNotes"></textarea>
+                        </label>
+                    </section>
+                }
+                else
+                {
+                    <section class="entry-details">
+                        <h3>@_selectedEntry.EntryName</h3>
+                        <p><strong>Username:</strong> @_selectedEntry.Username</p>
+                        <p><strong>URL:</strong> @_selectedEntry.Url</p>
+                        <p><strong>Category:</strong> @_selectedEntry.Category</p>
+                        <p><strong>Notes:</strong> @_selectedEntry.Notes</p>
+                        <p><strong>Tags:</strong> @string.Join(", ", _selectedEntry.Tags)</p>
+                    </section>
+                }
             </div>
 
             <footer class="modal-footer">
-                <button class="panel-btn panel-btn-secondary" type="button">Copy Username</button>
-                <button class="panel-btn panel-btn-secondary" type="button">Copy Password</button>
-                <button class="panel-btn panel-btn-primary" type="button">Edit Entry</button>
+                <div class="modal-footer-group">
+                    @if (_selectedEntry is not null && _isEditingEntry)
+                    {
+                        <button class="panel-btn panel-btn-danger" type="button" @onclick="DeleteSelectedEntryAsync">Delete</button>
+                    }
+                </div>
+
+                <div class="modal-footer-group">
+                    <button class="panel-btn panel-btn-secondary" type="button">Copy Username</button>
+                    <button class="panel-btn panel-btn-secondary" type="button">Copy Password</button>
+
+                    @if (_selectedEntry is not null && !_isEditingEntry)
+                    {
+                        <button class="panel-btn panel-btn-primary" type="button" @onclick="StartEditingSelectedEntry">Edit Entry</button>
+                    }
+                    else if (_selectedEntry is not null && _isEditingEntry)
+                    {
+                        <button class="panel-btn panel-btn-primary" type="button" @onclick="UpdateSelectedEntryAsync">Update</button>
+                    }
+                </div>
             </footer>
         </section>
     </div>
@@ -176,6 +245,8 @@
     private bool showAddEntryModal;
     private bool showViewEntryModal;
     private readonly List<VaultEntry> _entries = new();
+    private VaultEntry? _selectedEntry;
+    private void SelectEntry(VaultEntry entry) => _selectedEntry = entry;
 
     private string _entryName = string.Empty;
     private string _category = "Work";
@@ -185,6 +256,16 @@
     private string _tags = string.Empty;
     private string _notes = string.Empty;
     private string? _saveError;
+    
+    // Editing fields
+    private bool _isEditingEntry;
+    private string _editEntryName = string.Empty;
+    private string _editCategory = string.Empty;
+    private string _editUrl = string.Empty;
+    private string _editUsername = string.Empty;
+    private string _editPassword = string.Empty;
+    private string _editTags = string.Empty;
+    private string _editNotes = string.Empty;
 
     private int EntryCount => _entries.Count;
     private int StrongPasswordCount => _entries.Count(entry => IsStrongPassword(entry.Password));
@@ -194,6 +275,58 @@
         .Distinct(StringComparer.OrdinalIgnoreCase)
         .Count();
 
+    //Editing entry porting selected entry into draft fields.
+    private void StartEditingSelectedEntry()
+    {
+        if (_selectedEntry is null) return;
+        
+        _editEntryName = _selectedEntry.EntryName;
+        _editCategory = _selectedEntry.Category;
+        _editUrl = _selectedEntry.Url;
+        _editUsername = _selectedEntry.Username;
+        _editPassword = _selectedEntry.Password;
+        _editTags = string.Join(", ", _selectedEntry.Tags);
+        _editNotes = _selectedEntry.Notes;
+        _isEditingEntry = true;
+    }
+
+    private async Task DeleteSelectedEntryAsync()
+    {
+        if (_selectedEntry is null)
+        {
+            _saveError = "Select an entry first.";
+            return;
+        }
+        
+        await VaultFacade.DeleteEntryAsync(_selectedEntry.Id);
+        await LoadEntriesAsync();
+        _selectedEntry = null;
+        _isEditingEntry = false;
+    }
+
+    private async Task UpdateSelectedEntryAsync()
+    {
+        if (_selectedEntry is null)
+        {
+            _saveError = "Select an entry first.";
+            return;
+        }
+
+        await VaultFacade.UpdateEntryAsync(
+            _selectedEntry.Id,
+            _editEntryName,
+            _editCategory,
+            _editUrl,
+            _editUsername,
+            _editPassword,
+            _editNotes,
+            _editTags);
+
+        await LoadEntriesAsync();
+        _isEditingEntry = false;
+    }
+    
+    
     
     // Runs once Dashboard is created, subscribes the dashboard to AppState.OnChange
     // so that way gets notified when the vault unlocks
