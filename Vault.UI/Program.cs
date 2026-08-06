@@ -40,6 +40,8 @@ builder.Services.AddScoped<IEntryApplicationService, EntryApplicationService>();
 builder.Services.AddScoped<IVaultFacade, VaultFacade>();
 
 builder.Services.AddScoped<IVaultEntryQueryService, VaultEntryQueryService>();
+//Clipboard service for password and username
+builder.Services.AddScoped<ClipboardService>();
 
 var app = builder.Build();
 

@@ -2,6 +2,7 @@
 @using Vault.Facade.Interface
 @using Vault.UI.Models
 @inject IVaultFacade VaultFacade
+@inject ClipboardService Clipboard
 
 <ModalShell TitleId="view-entries-title"
             Title="View Entries"
@@ -52,8 +53,8 @@
         </div>
 
         <div class="modal-footer-group">
-            <button class="panel-btn panel-btn-secondary" type="button">Copy Username</button>
-            <button class="panel-btn panel-btn-secondary" type="button">Copy Password</button>
+            <button class="panel-btn panel-btn-secondary" type="button" @onclick="CopyUsername">Copy Username</button>
+            <button class="panel-btn panel-btn-secondary" type="button" @onclick="CopyPassword">Copy Password</button>
 
             @if (_selectedEntry is not null && !_isEditingEntry)
             {
@@ -67,6 +68,7 @@
     </Footer>
 </ModalShell>
 
+
 @code {
     [Parameter, EditorRequired] public EventCallback OnClose { get; set; }
     [Parameter, EditorRequired] public EventCallback OnEntriesChanged { get; set; }
@@ -76,6 +78,25 @@
     private bool _isEditingEntry;
     private EntryEditDraft _draft = new();
     private string? _actionError;
+
+    private async Task CopyPassword()
+    {
+        if (_selectedEntry is null) return;
+
+        var password = _selectedEntry.Password;
+        await Clipboard.CopyText(password);
+        await Clipboard.ScheduleClear(password, 12_000);
+    }
+
+    private async Task CopyUsername()
+    {
+        if (_selectedEntry is null) return;
+        
+        var username = _selectedEntry.Username;
+        await Clipboard.CopyText(username);
+        await Clipboard.ScheduleClear(username, 12_000);
+    }
+
 
     protected override async Task OnInitializedAsync()
     {
