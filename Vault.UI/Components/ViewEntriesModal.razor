@@ -10,13 +10,13 @@
             OnClose="OnClose">
     <Body>
         <div class="view-toolbar">
-            <input class="field-input search-input" type="search" placeholder="Search by app, username, or tag..." />
-            <button class="panel-btn" type="button">Newest</button>
-            <button class="panel-btn" type="button">A-Å</button>
+            <input class="field-input search-input" type="search" @bind="_searchText" @bind:event="oninput" placeholder="Search by app, username, or tag..." />
+            <button class="panel-btn @(IsNewestFamily ? "is-active" : "")" type="button" @onclick="ToggleNewestSort">@(_sortMode == SortMode.OldestFirst ? "Oldest" : "Newest")</button>
+            <button class="panel-btn @(IsNameFamily ? "is-active" : "")" type="button" @onclick="ToggleNameSort">@(_sortMode == SortMode.NameDescending ? "Å-A" : "A-Å")</button>
         </div>
 
         <div class="entries-layout">
-            <EntryList Entries="_entries" SelectedEntry="_selectedEntry" OnSelect="SelectEntry" />
+            <EntryList Entries="VisibleEntries" SelectedEntry="_selectedEntry" OnSelect="SelectEntry" />
 
             @if (_selectedEntry is null)
             {
@@ -73,11 +73,56 @@
     [Parameter, EditorRequired] public EventCallback OnClose { get; set; }
     [Parameter, EditorRequired] public EventCallback OnEntriesChanged { get; set; }
 
+    private string _searchText = "";
+    private SortMode _sortMode = SortMode.NewestFirst;
     private List<VaultEntry> _entries = new();
     private VaultEntry? _selectedEntry;
     private bool _isEditingEntry;
     private EntryEditDraft _draft = new();
     private string? _actionError;
+
+    private bool IsNewestFamily => _sortMode is SortMode.NewestFirst or SortMode.OldestFirst;
+    private bool IsNameFamily => _sortMode is SortMode.NameAscending or SortMode.NameDescending;
+
+    // VaultEntry carries no creation timestamp, so "Newest"/"Oldest" fall back to
+    // the load order returned by VaultFacade.GetEntriesAsync() rather than a real date.
+    private IReadOnlyList<VaultEntry> VisibleEntries
+    {
+        get
+        {
+            var filtered = _entries.Where(e => MatchesSearch(e, _searchText));
+
+            IEnumerable<VaultEntry> sorted = _sortMode switch
+            {
+                SortMode.NewestFirst => filtered.Reverse(),
+                SortMode.OldestFirst => filtered,
+                SortMode.NameAscending => filtered.OrderBy(e => e.EntryName, StringComparer.OrdinalIgnoreCase),
+                SortMode.NameDescending => filtered.OrderByDescending(e => e.EntryName, StringComparer.OrdinalIgnoreCase),
+                _ => filtered
+            };
+
+            return sorted.ToList();
+        }
+    }
+
+    private static bool MatchesSearch(VaultEntry entry, string searchText)
+    {
+        if (string.IsNullOrWhiteSpace(searchText)) return true;
+
+        return entry.EntryName.Contains(searchText, StringComparison.OrdinalIgnoreCase)
+            || entry.Username.Contains(searchText, StringComparison.OrdinalIgnoreCase)
+            || entry.Tags.Any(tag => tag.Contains(searchText, StringComparison.OrdinalIgnoreCase));
+    }
+
+    private void ToggleNewestSort()
+    {
+        _sortMode = _sortMode == SortMode.NewestFirst ? SortMode.OldestFirst : SortMode.NewestFirst;
+    }
+
+    private void ToggleNameSort()
+    {
+        _sortMode = _sortMode == SortMode.NameAscending ? SortMode.NameDescending : SortMode.NameAscending;
+    }
 
     private async Task CopyPassword()
     {
@@ -91,7 +136,7 @@
     private async Task CopyUsername()
     {
         if (_selectedEntry is null) return;
-        
+
         var username = _selectedEntry.Username;
         await Clipboard.CopyText(username);
         await Clipboard.ScheduleClear(username, 12_000);

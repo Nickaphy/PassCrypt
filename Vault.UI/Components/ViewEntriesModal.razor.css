@@ -8,6 +8,11 @@
     min-width: 0;
 }
 
+.panel-btn.is-active {
+    background: rgba(171, 96, 52, 0.94);
+    border-color: rgba(255, 202, 165, 0.48);
+}
+
 .entries-layout {
     flex: 1;
     min-height: 0;
