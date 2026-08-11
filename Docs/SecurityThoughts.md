@@ -43,3 +43,14 @@ function instead of switching when hardware inevitably get faster. The parameter
 - **Memory**: How much memory to use for the key derivation. More memory means more security, but also more resource usage.
 - **Iterations**: How many times to run the key derivation function. More iterations means more security, but also more time taken to derive the key.
 - **Parallelism**: How many threads to use for the key derivation. More threads means more security, but also more resource usage.
+
+## In-memory handling
+- `Array.Cleat()` on master password bytes after derivation.
+- Session key lifecycle `VaultKeySession.Clear()` on lock.
+- **Limitation** .NET GC/string immutability means full memory srubbing isn't
+  guranteed.
+
+## Clipboard exposure
+- A times out-clear (12 seconds) + blur/pagehide handling
+- Clipboard is a shared resource, so other apps can read it. This is
+  a limitation of the OS and cannot be fully mitigated by the application.
