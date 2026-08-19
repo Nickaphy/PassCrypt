@@ -65,12 +65,5 @@ PassCrypt/
 └── PassCrypt.sln
 ```
 
-## Roadmap
-- [ ] Entry search / filtering
-- [ ] Password generator
-- [ ] Optional user-controlled cloud sync (bring your own storage)
-- [ ] Vault export / import
-- [ ] Unit test coverage for crypto and application layers
-
 ## Security disclaimer
 This is a personal project and **has not been independently audited**. The cryptographic choices (Argon2id + AES-256-GCM) follow current best practice, but implementation bugs are always possible. Don't use this as your sole password manager for high-value credentials until it's had real scrutiny — treat it as a learning/portfolio project.
