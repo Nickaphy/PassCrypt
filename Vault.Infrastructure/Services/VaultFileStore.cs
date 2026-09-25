@@ -1,14 +1,19 @@
+using System.Text;
+using Vault.Core;
 using Vault.Core.Abstractions;
 
 namespace Vault.Infrastructure.Services;
 
 public class VaultFileStore : IVaultFileStore
 {
-    // Checks whether the vault file already exists.
+    // Header: PCV1(4) + version(1) + salt(16) + 4 ints(16) = 37 bytes
+    // Body start: nonce(12) + tag(16) + length(4) = 32 bytes
+    private const int HeaderSize = 4 + 1 + 16 + (4 * 4);
+    private const int MinBodyPrefixSize = 12 + 16 + 4;
+
     public bool Exists() => File.Exists(GetVaultPath());
 
-    // Saves the encrypted vault bytes to disk.
-    public void Save(byte[] nonce, byte[] tag, byte[] cipherText)
+    public void Save(byte[] nonce, byte[] tag, byte[] cipherText, KdfParams kdf)
     {
         string vaultPath = GetVaultPath();
         string? directory = Path.GetDirectoryName(vaultPath);
@@ -21,44 +26,45 @@ public class VaultFileStore : IVaultFileStore
         using FileStream stream = File.Create(vaultPath);
         using BinaryWriter writer = new(stream);
 
-        // File layout is: nonce, tag, length, ciphertext.
+        WriteHeader(writer, stream, kdf);
+
         stream.Write(nonce);
         stream.Write(tag);
         writer.Write(cipherText.Length);
         stream.Write(cipherText);
     }
 
-    /*
-    opens `vault.bin`
-    2. reads the stored `nonce`
-    3. reads the stored `tag`
-    4. reads the ciphertext length
-    5. reads the ciphertext bytes
-    6. returns all three so the decryptor can turn them back into plaintext entries
-    */
-    public (byte[] nonce, byte[] tag, byte[] cipherText) Load()
+    public KdfParams ReadHeader()
     {
-        // Open the vault file for reading.
         using FileStream stream = File.OpenRead(GetVaultPath());
-        // Validate that the file is large enough to contain the nonce, tag, and length of the ciphertext.
-        if (stream.Length < 12 + 16 + 4)
+        if (stream.Length < HeaderSize)
+        {
+            throw new InvalidDataException("Vault file is too small to contain a valid header.");
+        }
+
+        using BinaryReader reader = new(stream);
+        return ReadHeader(reader);
+    }
+
+    public (byte[] nonce, byte[] tag, byte[] cipherText, KdfParams kdf) Load()
+    {
+        using FileStream stream = File.OpenRead(GetVaultPath());
+        if (stream.Length < HeaderSize + MinBodyPrefixSize)
         {
             throw new InvalidDataException("Vault file is too small to contain valid data.");
         }
 
         using BinaryReader reader = new(stream);
 
-        // Read the same layout that Save() writes.
-        byte[] nonce = reader.ReadBytes(12); // AES-GCM nonce is 12 bytes.
+        KdfParams kdf = ReadHeader(reader);
 
-        // Validate the nonce length.
-        byte[] tag = reader.ReadBytes(16); // AES-GCM tag is 16 bytes.
+        byte[] nonce = reader.ReadBytes(12);
+        byte[] tag = reader.ReadBytes(16);
         if (nonce.Length != 12 || tag.Length != 16)
         {
             throw new InvalidDataException("Vault file is corrupted or has an invalid format.");
         }
 
-        // Read the length of the ciphertext and validate it.
         int cipherLength = reader.ReadInt32();
         if (cipherLength < 0 || cipherLength != stream.Length - stream.Position)
         {
@@ -71,15 +77,54 @@ public class VaultFileStore : IVaultFileStore
             throw new InvalidDataException("Vault file is corrupted or has an invalid format.");
         }
 
-        return (nonce, tag, cipherText);
+        return (nonce, tag, cipherText, kdf);
     }
 
-    // Returns the vault file path under LocalApplicationData.
     public string GetVaultPath()
     {
         return Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             "PassCrypt",
             "vault.bin");
+    }
+
+    private static void WriteHeader(BinaryWriter writer, FileStream stream, KdfParams kdf)
+    {
+        stream.Write(Encoding.ASCII.GetBytes("PCV1"));
+        writer.Write((byte)1);
+        stream.Write(kdf.Salt);
+        writer.Write(kdf.MemoryKib);
+        writer.Write(kdf.Iterations);
+        writer.Write(kdf.Parallelism);
+        writer.Write(kdf.KeyLength);
+    }
+
+    private static KdfParams ReadHeader(BinaryReader reader)
+    {
+        byte[] magic = reader.ReadBytes(4);
+        if (magic.Length != 4 || Encoding.ASCII.GetString(magic) != "PCV1")
+        {
+            throw new InvalidDataException(
+                "Vault file is missing the PCV1 header. Delete the old vault.bin/salt.bin and unlock again to create a new vault.");
+        }
+
+        byte version = reader.ReadByte();
+        if (version != 1)
+        {
+            throw new InvalidDataException($"Unsupported vault header version: {version}.");
+        }
+
+        byte[] salt = reader.ReadBytes(16);
+        if (salt.Length != 16)
+        {
+            throw new InvalidDataException("Vault header has an invalid salt.");
+        }
+
+        int memoryKib = reader.ReadInt32();
+        int iterations = reader.ReadInt32();
+        int parallelism = reader.ReadInt32();
+        int keyLength = reader.ReadInt32();
+
+        return new KdfParams(salt, memoryKib, iterations, parallelism, keyLength);
     }
 }

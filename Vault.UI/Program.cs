@@ -14,9 +14,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents(options => options.DetailedErrors = true);
 
 // Dependency injection for the services.
-// Load create salt.
-builder.Services.AddSingleton<ILoadCreateSalt, LoadCreateSalt>();
-// Key derivation.
+// Key derivation (salt + Argon2 params come from the vault header).
 builder.Services.AddSingleton<IKeyDerivation, KeyDerivation>();
 // Decryptor.
 builder.Services.AddScoped<IDecryptor, Decryptor>();

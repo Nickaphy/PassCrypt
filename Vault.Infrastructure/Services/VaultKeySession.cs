@@ -1,31 +1,31 @@
+using Vault.Core;
 using Vault.Core.Abstractions;
 
 namespace Vault.Infrastructure.Services;
 
-/* Ows the session's cryptographic key lifecycle only Derive() loads/creates the salt, derives the AES key via KeyDerivation */
+/* Owns the session's cryptographic key lifecycle. Derive() takes KdfParams
+   (salt + Argon2 settings from the vault header) and holds both the AES key
+   and those params for later Save calls. */
 public class VaultKeySession : IVaultKeySession
 {
-    private readonly ILoadCreateSalt _loadCreateSalt;
     private readonly IKeyDerivation _keyDerivation;
 
     private byte[]? _sessionKey;
+    private KdfParams? _kdfParams;
 
-    public VaultKeySession(ILoadCreateSalt loadCreateSalt, IKeyDerivation keyDerivation)
+    public VaultKeySession(IKeyDerivation keyDerivation)
     {
-        _loadCreateSalt = loadCreateSalt;
         _keyDerivation = keyDerivation;
     }
 
     public bool IsUnlocked => _sessionKey is not null;
 
-    // Derives the session key from the master password and clears the
-    // password bytes immediately afterward, whether derivation succeeded or not.
-    public void Derive(byte[] masterPassword)
+    public void Derive(byte[] masterPassword, KdfParams kdf)
     {
         try
         {
-            byte[] salt = _loadCreateSalt.LoadOrCreateSalt();
-            _sessionKey = _keyDerivation.DeriveKey(masterPassword, salt);
+            _sessionKey = _keyDerivation.DeriveKey(masterPassword, kdf);
+            _kdfParams = kdf;
         }
         finally
         {
@@ -41,6 +41,14 @@ public class VaultKeySession : IVaultKeySession
         return _sessionKey;
     }
 
+    public KdfParams RequireKdfParams()
+    {
+        if (_kdfParams is null)
+            throw new UnauthorizedAccessException("Vault is locked.");
+
+        return _kdfParams;
+    }
+
     public void Clear()
     {
         if (_sessionKey is not null)
@@ -48,5 +56,7 @@ public class VaultKeySession : IVaultKeySession
             Array.Clear(_sessionKey, 0, _sessionKey.Length);
             _sessionKey = null;
         }
+
+        _kdfParams = null;
     }
 }

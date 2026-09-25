@@ -3,10 +3,8 @@ using Vault.Core.Abstractions;
 
 namespace Vault.Infrastructure.Services;
 
-/* Thin coordinator implementing IVaultSessionService, the only thing the rest of the app (UI,
-  EntryApplicationService) talks to. Every method follows the same shape: guard via VaultKeySession, delegate to
-  VaultEntryRepository, persist via VaultPersistenceService. No logic of its own beyond sequencing. */
-
+/* Thin coordinator implementing IVaultSessionService. Unlock now reads/creates
+   KdfParams before Derive so Argon2 settings come from the vault header. */
 public class VaultSessionService : IVaultSessionService
 {
     private readonly IVaultKeySession _keySession;
@@ -27,16 +25,21 @@ public class VaultSessionService : IVaultSessionService
     {
         cancellationToken.ThrowIfCancellationRequested();
 
-        _keySession.Derive(masterPassword);
-        byte[] sessionKey = _keySession.RequireSessionKey();
-
         if (!_persistenceService.VaultExists())
         {
+            KdfParams kdf = KdfParams.CreateDefault();
+            _keySession.Derive(masterPassword, kdf);
+            byte[] sessionKey = _keySession.RequireSessionKey();
+
             _entryRepository.Clear();
-            _persistenceService.Save(sessionKey, _entryRepository.GetAll());
+            _persistenceService.Save(sessionKey, kdf, _entryRepository.GetAll());
         }
         else
         {
+            KdfParams kdf = _persistenceService.ReadHeader();
+            _keySession.Derive(masterPassword, kdf);
+            byte[] sessionKey = _keySession.RequireSessionKey();
+
             List<VaultEntry> entries = _persistenceService.Load(sessionKey);
             _entryRepository.ReplaceAll(entries);
         }
@@ -47,15 +50,17 @@ public class VaultSessionService : IVaultSessionService
     public void AddEntry(VaultEntry entry)
     {
         byte[] sessionKey = _keySession.RequireSessionKey();
+        KdfParams kdf = _keySession.RequireKdfParams();
         _entryRepository.Add(entry);
-        _persistenceService.Save(sessionKey, _entryRepository.GetAll());
+        _persistenceService.Save(sessionKey, kdf, _entryRepository.GetAll());
     }
 
     public void DeleteEntry(Guid entryId)
     {
         byte[] sessionKey = _keySession.RequireSessionKey();
+        KdfParams kdf = _keySession.RequireKdfParams();
         _entryRepository.Delete(entryId);
-        _persistenceService.Save(sessionKey, _entryRepository.GetAll());
+        _persistenceService.Save(sessionKey, kdf, _entryRepository.GetAll());
     }
 
     public void UpdateEntry(
@@ -69,8 +74,9 @@ public class VaultSessionService : IVaultSessionService
         IEnumerable<string> tags)
     {
         byte[] sessionKey = _keySession.RequireSessionKey();
+        KdfParams kdf = _keySession.RequireKdfParams();
         _entryRepository.Update(entryId, entryName, category, url, username, password, notes, tags);
-        _persistenceService.Save(sessionKey, _entryRepository.GetAll());
+        _persistenceService.Save(sessionKey, kdf, _entryRepository.GetAll());
     }
 
     public IReadOnlyList<VaultEntry> GetEntries()
